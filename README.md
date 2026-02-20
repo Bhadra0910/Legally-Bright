@@ -112,21 +112,23 @@ python -m http.server 3000
 #### Screenshots
 <img width="1920" height="876" alt="Screenshot (570)" src="https://github.com/user-attachments/assets/b0883440-c2cf-4b02-bcfb-0248a36a0808" />
 
+*Cover page — the magazine-style entry point with scrapbook aesthetic and animated open button*
+
 <img width="1920" height="871" alt="Screenshot (571)" src="https://github.com/user-attachments/assets/c5d027de-58b5-47c2-bba3-fb1c3a6676ee" />
 
-![Cover page — the magazine-style entry point with scrapbook aesthetic and animated open button]
+*Welcome page — small intro for 1st timers!*
 
 <img width="1920" height="879" alt="Screenshot (572)" src="https://github.com/user-attachments/assets/519c70df-9a99-4d47-841b-866e8871922c" />
 
-![Concepts tab — multi-voice explanation panel with character selector, test-yourself section, and doubt box]
+*Concepts tab — multi-voice explanation panel with character selector, test-yourself section, and doubt box*
 
 <img width="1920" height="879" alt="Screenshot (573)" src="https://github.com/user-attachments/assets/89901951-ff91-499c-a634-7ea01640e599" />
 
-![Mistakes tab — error translator with live search, emotional framing, and step-by-step fix guides]
+*Mistakes tab — error translator with live search, emotional framing, and step-by-step fix guides*
 
 <img width="1920" height="873" alt="Screenshot (574)" src="https://github.com/user-attachments/assets/7b7a1b97-df35-4ebe-ba41-d83a0c0841f9" />
 
-![Survival Kit — interactive stuck-type selector with protocol steps and burnout check-in widget]
+*Survival Kit — interactive stuck-type selector with protocol steps and burnout check-in widget*
 
 
 ---
