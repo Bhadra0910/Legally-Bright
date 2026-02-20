@@ -1,3 +1,6 @@
+
+![WhatsApp Image 2026-02-21 at 4 01 56 AM](https://github.com/user-attachments/assets/01364fed-97d4-43f8-96e8-c39e718e23fe)
+
 # Legally Bright 🎯
 
 ## Basic Details
