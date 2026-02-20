@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legally Bright | Tech Journal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #FFF5F9;
+  --paper: #FFFFFF;
+  --cream: #FFF0F5;
+  --text: #1A0010;
+  --text-light: #888;
+  --pink: #FF6BAE;
+  --pink-light: #FFB3D1;
+  --pink-pale: #FFD6E7;
+  --pink-dark: #C2185B;
+  --hot: #FF2D55;
+  --gold: #FFC107;
+  --green: #27AE60;
+  --shadow: 4px 4px 0px rgba(26,0,16,0.12);
+  --shadow-lg: 8px 8px 0px rgba(26,0,16,0.15);
+  --font-head: 'Playfair Display', serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+  --sidebar-w: 200px;
+  --progress: 0%;
+}
+[data-theme="dark"] {
+  --bg: #1A0005;
+  --paper: #2E000B;
+  --cream: #3D0012;
+  --text: #FFB3C6;
+  --text-light: #FF6680;
+  --pink: #FF2D55;
+  --pink-light: #FF6680;
+  --pink-pale: #3D0012;
+  --pink-dark: #1A0005;
+  --shadow: 4px 4px 0px rgba(0,0,0,0.5);
+  --shadow-lg: 8px 8px 0px rgba(0,0,0,0.7);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background-color:var(--bg);
+  background-image:radial-gradient(var(--pink-light) 1px, transparent 1px);
+  background-size:20px 20px;
+  font-family:var(--font-body);
+  color:var(--text);
+  overflow-x:hidden;
+  transition:background-color 0.3s, color 0.3s;
+}
+.hidden{display:none!important;}
+
+/* ── PROGRESS BAR ── */
+#global-progress{
+  position:fixed;top:0;left:0;right:0;height:3px;
+  background:var(--pink-pale);z-index:999;
+}
+#global-progress-fill{
+  height:100%;width:var(--progress);
+  background:linear-gradient(90deg,var(--hot),var(--pink));
+  transition:width 0.6s ease;
+}
+
+/* ── COVER ── */
+#home-page{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:24px;
+}
+.cover-wrap{position:relative;width:100%;max-width:680px;}
+
+.cover-tape{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(-1deg);
+  width:160px;height:30px;
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(4px);
+  border:1px dashed rgba(0,0,0,0.15);z-index:5;
+}
+.cover-tape-r{
+  position:absolute;top:12px;right:12px;width:64px;height:24px;
+  background:rgba(255,255,255,0.5);
+  border:1px dashed rgba(0,0,0,0.12);
+  transform:rotate(14deg);z-index:5;
+}
+
+.cover-frame{
+  position:relative;width:100%;height:480px;
+  border:3px solid var(--text);
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;cursor:pointer;
+  transform:rotate(-1.5deg);
+  background:linear-gradient(135deg,#FFCCE4 0%,#FF6BAE 50%,#FF2D55 100%);
+  transition:transform 0.35s ease, box-shadow 0.35s ease;
+}
+.cover-frame:hover{transform:rotate(0deg) scale(1.01);box-shadow:12px 12px 0 rgba(26,0,16,0.2);}
+.cover-frame::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.cover-center{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;pointer-events:none;z-index:10;
+}
+.cover-center h1{
+  font-family:var(--font-head);font-size:clamp(3.5rem,9vw,6rem);
+  color:white;line-height:0.88;letter-spacing:-2px;
+  text-shadow:4px 4px 0 rgba(0,0,0,0.2),0 0 80px rgba(255,45,85,0.4);
+}
+.cover-sub{
+  display:inline-block;background:rgba(255,255,255,0.2);
+  color:white;font-family:var(--font-mono);font-size:0.6rem;
+  padding:5px 16px;margin-top:16px;
+  border:1.5px solid rgba(255,255,255,0.6);
+  letter-spacing:3px;text-transform:uppercase;backdrop-filter:blur(4px);
+}
+.cover-open-btn{
+  position:absolute;bottom:20px;right:20px;
+  background:white;color:var(--hot);
+  font-family:var(--font-mono);font-size:0.8rem;font-weight:700;
+  padding:10px 22px;border:2px solid var(--text);
+  box-shadow:3px 3px 0 var(--text);letter-spacing:1px;
+  pointer-events:none;
+  animation:pulse-btn 2s ease-in-out infinite;
+}
+@keyframes pulse-btn{
+  0%,100%{transform:translate(0,0);}
+  50%{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--text);}
+}
+.cover-caption{
+  background:var(--paper);border:2px solid var(--text);border-top:none;
+  padding:12px 20px;text-align:center;
+  font-family:var(--font-mono);font-size:0.72rem;
+  letter-spacing:1px;text-transform:uppercase;
+  box-shadow:6px 6px 0 var(--text);
+}
+.cover-stickers{position:absolute;right:-140px;top:20px;display:flex;flex-direction:column;gap:14px;}
+.sticker{
+  background:var(--paper);border:2px solid var(--text);
+  padding:10px 12px;width:120px;
+  box-shadow:3px 3px 0 var(--text);
+  font-family:var(--font-mono);font-size:0.58rem;
+  text-align:center;text-transform:uppercase;line-height:1.5;
+}
+.sticker:nth-child(1){transform:rotate(3deg);}
+.sticker:nth-child(2){transform:rotate(-2.5deg);}
+.sticker:nth-child(3){transform:rotate(2deg);}
+.sticker-num{font-size:1.4rem;display:block;margin-bottom:4px;font-family:var(--font-head);color:var(--pink);}
+
+/* ── ONBOARDING OVERLAY ── */
+#onboard-overlay{
+  position:fixed;inset:0;background:rgba(26,0,16,0.85);
+  z-index:500;display:flex;align-items:center;justify-content:center;
+  padding:20px;animation:fadeIn 0.4s ease;
+}
+.onboard-card{
+  background:var(--paper);border:3px solid var(--text);
+  box-shadow:10px 10px 0 var(--pink);
+  max-width:520px;width:100%;overflow:hidden;
+}
+.onboard-header{
+  background:var(--pink);padding:20px 24px;
+  color:white;font-family:var(--font-head);font-size:1.6rem;
+}
+.onboard-header p{font-family:var(--font-body);font-size:0.85rem;margin-top:6px;opacity:0.9;font-style:italic;}
+.onboard-steps{padding:24px;display:flex;flex-direction:column;gap:14px;}
+.onboard-step{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:14px;background:var(--bg);border:2px solid var(--text);
+}
+.onboard-step-num{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--pink);color:white;
+  font-family:var(--font-mono);font-size:0.7rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.onboard-step-text strong{display:block;font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;margin-bottom:3px;}
+.onboard-step-text span{font-size:0.85rem;opacity:0.85;line-height:1.5;}
+.onboard-start{
+  display:block;width:100%;padding:16px;
+  background:var(--text);color:var(--paper);
+  font-family:var(--font-mono);font-size:0.85rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  border:none;cursor:pointer;
+  transition:opacity 0.2s;
+}
+.onboard-start:hover{opacity:0.8;}
+.onboard-skip{
+  text-align:center;padding:10px;font-family:var(--font-mono);font-size:0.65rem;
+  color:var(--text-light);cursor:pointer;letter-spacing:1px;text-decoration:underline;
+}
+
+/* ── DASHBOARD ── */
+#dashboard-page{display:flex;height:100vh;overflow:hidden;}
+
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar-w);background:var(--paper);
+  border-right:2px solid var(--text);
+  display:flex;flex-direction:column;
+  z-index:20;flex-shrink:0;
+  transition:width 0.3s ease;
+}
+.sidebar-logo{
+  padding:18px 16px;border-bottom:2px solid var(--text);
+  font-family:var(--font-head);font-size:1.1rem;
+  color:var(--pink);font-style:italic;
+}
+.sidebar-logo small{display:block;font-family:var(--font-mono);font-size:0.55rem;color:var(--text-light);letter-spacing:1px;text-transform:uppercase;margin-top:2px;font-style:normal;}
+
+.nav-tabs{flex:1;padding:12px 8px;display:flex;flex-direction:column;gap:4px;}
+.nav-tab{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border:2px solid transparent;
+  cursor:pointer;border-radius:0;
+  font-family:var(--font-mono);font-size:0.7rem;
+  text-transform:uppercase;letter-spacing:0.5px;
+  color:var(--text);transition:all 0.15s;
+  background:transparent;white-space:nowrap;
+}
+.nav-tab:hover{background:var(--pink-pale);border-color:var(--pink-light);}
+.nav-tab.active{
+  background:var(--pink);color:white;
+  border-color:var(--text);
+  box-shadow:3px 3px 0 var(--text);
+}
+.nav-tab svg{width:18px;height:18px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nav-tab-label{flex:1;}
+.nav-tab-badge{
+  font-size:0.55rem;background:var(--hot);color:white;
+  padding:1px 5px;border-radius:2px;
+}
+
+/* PROGRESS CARD */
+.sidebar-progress{
+  padding:12px 14px;border-top:2px solid var(--text);
+  background:var(--cream);
+}
+.progress-label{font-family:var(--font-mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:6px;}
+.progress-bar-wrap{height:8px;background:var(--pink-pale);border:1.5px solid var(--text);position:relative;}
+.progress-bar-fill{height:100%;background:var(--pink);transition:width 0.6s ease;}
+.progress-count{font-family:var(--font-mono);font-size:0.65rem;margin-top:5px;color:var(--pink);}
+
+.sidebar-bottom{padding:10px 8px;border-top:2px solid var(--text);display:flex;flex-direction:column;gap:4px;}
+.sidebar-btn{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;
+  font-family:var(--font-mono);font-size:0.65rem;text-transform:uppercase;
+  letter-spacing:0.5px;cursor:pointer;background:none;border:none;color:var(--text-light);
+  transition:color 0.15s;
+}
+.sidebar-btn:hover{color:var(--pink);}
+.sidebar-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* CONTENT AREA */
+.journal-content{
+  flex:1;overflow-y:auto;padding:32px 48px;
+  background:var(--bg);
+  background-image:linear-gradient(var(--pink-pale) 1px, transparent 1px);
+  background-size:100% 28px;
+}
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:32px;background:var(--paper);
+  padding:10px 18px;border:2px solid var(--text);
+  box-shadow:var(--shadow);
+}
+.topbar-left{display:flex;align-items:center;gap:12px;}
+.avatar{
+  width:38px;height:38px;border-radius:50%;
+  border:2px solid var(--text);object-fit:cover;
+  background:var(--pink-light);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:1rem;color:var(--pink-dark);
+  flex-shrink:0;overflow:hidden;
+}
+.avatar img{width:100%;height:100%;object-fit:cover;}
+.user-name{font-family:var(--font-head);font-size:0.95rem;font-weight:700;}
+.user-level{font-family:var(--font-mono);font-size:0.62rem;color:var(--pink);text-transform:uppercase;letter-spacing:1px;}
+.theme-btn{
+  font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;
+  letter-spacing:1px;padding:6px 14px;
+  background:none;border:2px solid var(--text);color:var(--text);cursor:pointer;
+  transition:all 0.2s;
+}
+.theme-btn:hover{background:var(--text);color:var(--paper);}
+
+#content-area{animation:fadeIn 0.4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── SHARED COMPONENTS ── */
+.chapter-title{
+  font-family:var(--font-head);font-size:2.2rem;color:var(--text);
+  border-bottom:2px dashed var(--pink-light);padding-bottom:10px;margin-bottom:8px;
+}
+.chapter-badge{
+  display:inline-block;background:var(--pink-light);color:var(--text);
+  font-family:var(--font-mono);font-size:0.68rem;padding:3px 10px;
+  border:1.5px solid var(--text);letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.card{
+  border:2px solid var(--text);background:var(--paper);
+  padding:20px;margin-bottom:18px;box-shadow:var(--shadow);
+}
+.card h3{font-family:var(--font-head);color:var(--pink);margin-bottom:10px;}
+.tip-box{
+  background:#FFF9E0;border-left:3px solid var(--gold);
+  padding:10px 14px;font-size:0.85rem;line-height:1.6;margin-top:10px;
+  border:2px solid var(--gold);
+}
+[data-theme="dark"] .tip-box{background:#2A1F00;}
+.fix-box{
+  background:#EDFFF3;border-left:3px solid var(--green);
+  padding:12px 14px;font-size:0.88rem;line-height:1.7;border:2px solid var(--green);
+}
+[data-theme="dark"] .fix-box{background:#002A12;}
+.label-tag{
+  font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;
+  letter-spacing:2px;color:var(--text-light);margin:14px 0 6px;display:block;
+}
+
+/* ── PATHWAYS ── */
+.pathway-card{
+  border:2px solid var(--text);background:var(--paper);
+  margin-bottom:18px;box-shadow:var(--shadow);overflow:hidden;
+}
+.pathway-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 20px;cursor:pointer;user-select:none;
+  transition:background 0.15s;
+}
+.pathway-head:hover{background:var(--pink-pale);}
+.pathway-head h3{font-family:var(--font-head);color:var(--pink);margin:0;}
+.pathway-sub{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-light);margin-top:3px;}
+.pathway-toggle{font-family:var(--font-mono);font-size:1.2rem;font-weight:700;color:var(--pink);transition:transform 0.3s;flex-shrink:0;}
+.pathway-card.open .pathway-toggle{transform:rotate(45deg);}
+.pathway-body{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.pathway-card.open .pathway-body{max-height:2400px;border-top:2px solid var(--text);}
+.pathway-inner{padding:24px 20px;}
+.meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.meta-pill{
+  font-family:var(--font-mono);font-size:0.65rem;padding:3px 10px;
+  border:1.5px solid var(--text);text-transform:uppercase;letter-spacing:0.5px;
+}
+.roadmap{position:relative;padding-left:32px;margin:0;}
+.roadmap::before{
+  content:'';position:absolute;left:10px;top:6px;bottom:6px;width:2px;
+  background:repeating-linear-gradient(to bottom,var(--pink-light) 0,var(--pink-light) 6px,transparent 6px,transparent 12px);
+}
+.step{position:relative;margin-bottom:28px;}
+.step:last-child{margin-bottom:0;}
+.step-dot{
+  position:absolute;left:-26px;top:4px;width:20px;height:20px;
+  border-radius:50%;background:var(--paper);border:2px solid var(--text);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:0.5rem;font-weight:700;z-index:1;
+}
+.step-dot.done{background:var(--pink);color:white;border-color:var(--pink);}
+.step-week{font-family:var(--font-mono);font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--pink);margin-bottom:3px;}
+.step-title{font-family:var(--font-head);font-size:1rem;margin-bottom:6px;}
+.step-desc{font-size:0.88rem;line-height:1.65;opacity:0.85;margin-bottom:8px;}
+.step-res{display:inline-block;font-family:var(--font-mono);font-size:0.65rem;background:var(--pink-pale);border:1px solid var(--pink-light);padding:2px 8px;margin:2px 4px 2px 0;}
+.after-box{
+  background:var(--pink-pale);padding:14px;border:2px solid var(--text);
+  margin-top:20px;font-size:0.88rem;line-height:1.6;
+}
+.after-box strong{font-family:var(--font-mono);font-size:0.75rem;display:block;margin-bottom:5px;}
+
+/* ── WHATS HOT ── */
+.hot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:24px;}
+.hot-card{
+  border:2px solid var(--text);background:var(--paper);
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.hot-card-header{padding:14px 16px;border-bottom:2px solid var(--text);}
+.hot-tag{
+  font-family:var(--font-mono);font-size:0.55rem;text-transform:uppercase;
+  letter-spacing:2px;color:white;background:var(--hot);
+  padding:2px 8px;margin-bottom:8px;display:inline-block;
+}
+.hot-card-header h3{font-family:var(--font-head);font-size:1.05rem;color:var(--text);margin:0;}
+.hot-card-body{padding:14px 16px;}
+.hot-card-body p{font-size:0.88rem;line-height:1.65;margin-bottom:10px;}
+.hot-why{
+  font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;
+  letter-spacing:1px;color:var(--pink);padding-top:10px;
+  border-top:1px dashed var(--pink-light);
+}
+.hot-action{
+  display:inline-block;margin-top:8px;font-family:var(--font-mono);font-size:0.65rem;
+  padding:4px 10px;border:1.5px solid var(--text);
+  background:var(--bg);color:var(--text);text-decoration:none;
+  transition:background 0.15s;cursor:pointer;
+}
+.hot-action:hover{background:var(--pink-light);}
+.hot-ticker{
+  background:var(--text);color:var(--paper);
+  padding:10px 20px;font-family:var(--font-mono);font-size:0.7rem;
+  display:flex;gap:30px;overflow:hidden;white-space:nowrap;
+  letter-spacing:1px;margin-bottom:24px;
+  border:2px solid var(--text);
+}
+.ticker-items{display:flex;gap:40px;animation:ticker 20s linear infinite;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── TOOLKIT ── */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:28px;}
+.tool-chip{
+  border:2px solid var(--text);background:var(--paper);
+  padding:18px 14px;cursor:pointer;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:6px;
+  transition:transform 0.15s,box-shadow 0.15s,background 0.15s;
+}
+.tool-chip:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--text);background:var(--pink-pale);}
+.tool-chip.active-tool{background:var(--pink);transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--text);}
+.tool-chip.active-tool .tool-name,.tool-chip.active-tool .tool-tag{color:white;}
+.tool-name{font-family:var(--font-head);font-size:1rem;color:var(--text);}
+.tool-tag{font-family:var(--font-mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:1px;color:var(--pink);}
+.tool-panel{
+  border:2px solid var(--text);background:var(--paper);
+  box-shadow:6px 6px 0 var(--text);margin-bottom:20px;overflow:hidden;
+  animation:slideDown 0.3s ease;
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
+.tool-panel-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px;border-bottom:2px solid var(--text);
+  background:var(--pink-pale);
+}
+.tool-panel-head h3{font-family:var(--font-head);font-size:1.3rem;color:var(--text);margin:0;}
+.close-btn{
+  background:var(--text);color:var(--paper);border:none;
+  padding:5px 12px;font-family:var(--font-mono);font-size:0.7rem;
+  cursor:pointer;letter-spacing:1px;transition:opacity 0.2s;
+}
+.close-btn:hover{opacity:0.75;}
+.mode-pills{display:flex;gap:8px;flex-wrap:wrap;padding:12px 20px;}
+.mode-pill{
+  padding:6px 14px;border:2px solid var(--text);border-radius:0;
+  font-size:0.7rem;font-family:var(--font-mono);cursor:pointer;
+  background:var(--paper);color:var(--text);transition:all 0.15s;
+}
+.mode-pill:hover{background:var(--pink-light);}
+.mode-pill.active{background:var(--text);color:var(--paper);}
+.tool-content{
+  margin:0 20px 16px;padding:18px;
+  background:var(--cream);border:2px solid var(--pink-light);min-height:80px;
+}
+.tool-content p{font-size:0.95rem;line-height:1.85;}
+.tool-facts{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:2px solid var(--text);border-bottom:2px solid var(--text);
+}
+.fact{padding:10px 14px;border-right:2px solid var(--text);}
+.fact:last-child{border-right:none;}
+.fact-lbl{font-family:var(--font-mono);font-size:0.55rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:3px;}
+.fact-val{font-family:var(--font-mono);font-size:0.7rem;font-weight:700;}
+.tool-step{padding:14px 20px;background:var(--cream);border-bottom:2px solid var(--text);}
+.tool-step strong{font-family:var(--font-mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:5px;}
+.tool-dyk{padding:14px 20px;background:#FFF9E0;}
+[data-theme="dark"] .tool-dyk{background:#2A1A00;}
+.dyk-lbl{font-family:var(--font-mono);font-size:0.65rem;font-weight:700;color:#B8860B;letter-spacing:1px;margin-bottom:5px;}
+
+/* ── MISTAKES ── */
+.error-search-box{
+  border:2px solid var(--text);background:var(--paper);
+  box-shadow:var(--shadow);padding:18px;margin-bottom:24px;position:relative;
+}
+.error-search-lbl{
+  position:absolute;top:-12px;left:14px;background:var(--hot);
+  color:white;font-family:var(--font-mono);font-size:0.65rem;
+  font-weight:700;padding:2px 10px;letter-spacing:1.5px;text-transform:uppercase;
+}
+.error-input-row{display:flex;gap:8px;margin-bottom:10px;}
+.error-input{
+  flex:1;padding:11px 14px;font-family:var(--font-mono);font-size:0.82rem;
+  border:2px solid var(--text);background:var(--bg);color:var(--text);outline:none;
+}
+.error-input:focus{border-color:var(--hot);}
+.search-btn{
+  background:var(--hot);color:white;border:2px solid var(--text);
+  padding:10px 18px;font-family:var(--font-mono);font-size:0.78rem;
+  font-weight:700;cursor:pointer;box-shadow:3px 3px 0 var(--text);
+  transition:transform 0.15s,box-shadow 0.15s;white-space:nowrap;
+}
+.search-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--text);}
+.suggestions{display:flex;flex-wrap:wrap;gap:8px;}
+.sug-chip{
+  font-family:var(--font-mono);font-size:0.65rem;padding:3px 9px;
+  border:1.5px solid var(--pink-light);background:var(--pink-pale);
+  cursor:pointer;transition:background 0.15s;
+}
+.sug-chip:hover{background:var(--pink-light);}
+.search-result{
+  margin-top:14px;border:2px solid var(--hot);background:#FFF0F2;
+  padding:16px;animation:slideDown 0.3s ease;
+}
+[data-theme="dark"] .search-result{background:#3D0010;}
+.result-vibe{font-family:var(--font-head);font-size:1.05rem;color:var(--hot);font-style:italic;margin-bottom:10px;}
+.err-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center;}
+.err-filter-lbl{font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);}
+.f-btn{
+  font-family:var(--font-mono);font-size:0.68rem;padding:4px 12px;
+  border:2px solid var(--text);cursor:pointer;background:var(--paper);color:var(--text);
+  transition:all 0.15s;text-transform:uppercase;
+}
+.f-btn:hover{background:var(--pink-pale);}
+.f-btn.active{background:var(--text);color:var(--paper);}
+.err-card{
+  border:2px solid var(--text);background:var(--paper);
+  margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden;
+}
+.err-head{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:14px 16px;cursor:pointer;gap:12px;transition:background 0.15s;
+}
+.err-head:hover{background:var(--pink-pale);}
+.err-vibe{font-family:var(--font-head);font-size:0.88rem;font-style:italic;color:var(--text-light);display:block;margin-bottom:2px;}
+.err-title{font-family:var(--font-mono);font-size:0.78rem;font-weight:700;color:var(--hot);}
+.err-tag-chip{font-family:var(--font-mono);font-size:0.55rem;padding:2px 6px;border:1px solid var(--pink-light);background:var(--pink-pale);}
+.err-toggle{font-size:1.1rem;color:var(--hot);font-weight:700;transition:transform 0.3s;flex-shrink:0;}
+.err-card.open .err-toggle{transform:rotate(45deg);}
+.err-body{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1);}
+.err-card.open .err-body{max-height:1000px;border-top:2px solid var(--text);}
+.err-inner{padding:18px 16px;}
+.wrong-attempt{
+  font-family:var(--font-mono);font-size:0.75rem;padding:6px 10px;
+  background:#FFE4E4;border-left:3px solid var(--hot);margin-bottom:6px;line-height:1.5;
+}
+[data-theme="dark"] .wrong-attempt{background:#4D000F;}
+
+/* ── CONCEPTS ── */
+.concepts-wrap{display:grid;grid-template-columns:190px 1fr;gap:22px;align-items:start;}
+.concept-sidebar{position:sticky;top:0;}
+.concept-sidebar-lbl{font-family:var(--font-mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-light);margin-bottom:8px;}
+.c-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 10px;border:2px solid var(--text);background:var(--paper);
+  margin-bottom:6px;cursor:pointer;font-family:var(--font-mono);font-size:0.68rem;
+  box-shadow:2px 2px 0 var(--text);transition:all 0.15s;gap:8px;
+}
+.c-item:hover{background:var(--pink-pale);transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--text);}
+.c-item.active{background:var(--pink);color:white;box-shadow:3px 3px 0 var(--text);}
+.c-item.active .c-ctag{border-color:rgba(255,255,255,0.4);color:white;}
+.c-item.active .c-check{color:white;}
+.c-name{flex:1;font-weight:700;}
+.c-ctag{font-size:0.52rem;padding:1px 5px;border:1px solid var(--pink-light);color:var(--pink);text-transform:uppercase;}
+.c-check{font-size:0.75rem;color:var(--green);}
+
+.char-bar{margin-bottom:14px;}
+.char-bar-lbl{font-family:var(--font-mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:8px;}
+.char-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.char-pill{
+  padding:6px 14px;border:2px solid var(--text);font-size:0.7rem;
+  font-family:var(--font-mono);cursor:pointer;background:var(--paper);color:var(--text);
+  transition:all 0.15s;white-space:nowrap;
+}
+.char-pill:hover{background:var(--pink-light);}
+.char-pill.active{background:var(--text);color:var(--paper);}
+
+.concept-card{
+  border:2px solid var(--text);background:#FFF0F7;
+  padding:20px;box-shadow:5px 5px 0 var(--text);margin-bottom:14px;
+}
+[data-theme="dark"] .concept-card{background:var(--cream);}
+.concept-speaker{font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--pink);margin-bottom:10px;display:block;}
+.concept-heading{font-family:var(--font-head);font-size:1.3rem;color:var(--pink);margin-bottom:12px;}
+.concept-text{font-size:0.95rem;line-height:1.9;}
+
+.doubt-box{
+  background:#FFFBF0;border:2px solid var(--gold);
+  padding:16px;box-shadow:4px 4px 0 var(--gold);margin-bottom:14px;position:relative;
+}
+[data-theme="dark"] .doubt-box{background:#2A1F00;}
+.doubt-label{
+  position:absolute;top:-12px;left:12px;background:var(--gold);color:#000;
+  font-family:var(--font-mono);font-size:0.6rem;font-weight:700;padding:2px 8px;letter-spacing:1px;
+}
+.doubt-row{display:flex;gap:8px;margin-bottom:8px;}
+.doubt-input{
+  flex:1;padding:9px 12px;font-family:var(--font-body);font-size:0.85rem;
+  border:2px solid var(--text);background:var(--paper);color:var(--text);outline:none;
+}
+.doubt-input:focus{border-color:var(--gold);}
+.doubt-btn{
+  background:var(--text);color:var(--paper);border:none;padding:9px 16px;
+  font-family:var(--font-mono);font-size:0.75rem;cursor:pointer;white-space:nowrap;
+  transition:opacity 0.2s;
+}
+.doubt-btn:hover{opacity:0.75;}
+.doubt-answer{
+  padding:12px;background:var(--paper);border-left:3px solid var(--gold);
+  font-size:0.88rem;line-height:1.7;animation:fadeIn 0.3s ease;
+}
+[data-theme="dark"] .doubt-answer{background:var(--cream);}
+
+.test-box{
+  border:2px solid var(--text);background:var(--paper);
+  padding:16px;box-shadow:4px 4px 0 var(--text);position:relative;
+}
+.test-lbl{
+  position:absolute;top:-12px;left:12px;background:var(--pink);color:white;
+  font-family:var(--font-mono);font-size:0.6rem;font-weight:700;padding:2px 8px;letter-spacing:1px;
+}
+.test-q{font-size:0.92rem;margin:8px 0 14px;line-height:1.6;}
+.reveal-btn{
+  background:var(--pink);color:white;border:2px solid var(--text);
+  padding:8px 16px;font-family:var(--font-mono);font-size:0.72rem;
+  cursor:pointer;box-shadow:3px 3px 0 var(--text);transition:transform 0.15s,box-shadow 0.15s;
+}
+.reveal-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--text);}
+.test-reveal{
+  margin-top:12px;padding:12px;background:#EDFFF3;border-left:3px solid var(--green);
+  font-size:0.88rem;line-height:1.7;animation:fadeIn 0.3s ease;
+}
+[data-theme="dark"] .test-reveal{background:#002A12;}
+
+/* ── SURVIVAL ── */
+.survival-section{font-family:var(--font-mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text);border-left:3px solid var(--pink);padding-left:10px;margin-bottom:14px;}
+.stuck-flow{border:2px solid var(--text);background:var(--paper);box-shadow:5px 5px 0 var(--text);padding:20px;margin-bottom:8px;}
+.stuck-q{font-family:var(--font-head);font-size:1.1rem;margin-bottom:12px;}
+.stuck-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.stuck-btn{
+  padding:12px 14px;border:2px solid var(--text);background:var(--paper);
+  font-family:var(--font-body);font-size:0.88rem;cursor:pointer;text-align:left;color:var(--text);
+  transition:all 0.15s;
+}
+.stuck-btn:hover{background:var(--pink-pale);transform:translate(-1px,-1px);box-shadow:2px 2px 0 var(--text);}
+.stuck-btn.active{background:var(--text);color:var(--paper);}
+.stuck-protocol{border-top:2px dashed var(--pink-light);padding-top:16px;display:none;animation:fadeIn 0.3s ease;}
+.stuck-protocol.show{display:block;}
+.proto-header{font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--pink);margin-bottom:14px;}
+.proto-step{display:flex;gap:12px;margin-bottom:16px;align-items:flex-start;}
+.proto-num{
+  width:26px;height:26px;background:var(--pink);color:white;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:0.65rem;font-weight:700;
+  border:1.5px solid var(--text);
+}
+.proto-body{font-size:0.88rem;line-height:1.75;padding-top:2px;}
+.proto-body strong{font-family:var(--font-mono);font-size:0.8rem;}
+.proto-code{font-family:var(--font-mono);font-size:0.75rem;background:var(--pink-pale);padding:1px 6px;border:1px solid var(--pink-light);}
+.time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:8px;}
+.time-card{border:2px solid var(--text);background:var(--paper);padding:14px;box-shadow:3px 3px 0 var(--text);}
+.time-task{font-family:var(--font-mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:5px;}
+.time-range{font-family:var(--font-head);font-size:1.25rem;color:var(--pink);margin-bottom:6px;line-height:1;}
+.time-note{font-size:0.8rem;line-height:1.55;opacity:0.85;}
+.imposter-card{border:2px solid var(--text);background:var(--paper);padding:24px;box-shadow:5px 5px 0 var(--text);margin-bottom:8px;}
+.imposter-voice{font-family:var(--font-head);font-size:1.15rem;font-style:italic;color:var(--pink);border-left:4px solid var(--pink);padding-left:16px;margin:0 0 20px;line-height:1.5;}
+.imposter-truth{font-size:0.92rem;line-height:1.85;margin-bottom:20px;}
+.imposter-reframe{background:var(--pink-pale);border-left:4px solid var(--pink);padding:14px 18px;margin-bottom:20px;font-size:0.9rem;line-height:1.8;}
+.evidence-prompt{
+  background:var(--paper);border:2px solid var(--text);
+  padding:10px 14px;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-light);font-style:italic;margin-top:10px;
+}
+.burnout-check{border:2px solid var(--text);background:var(--paper);padding:20px;box-shadow:5px 5px 0 var(--text);}
+.burnout-q{font-family:var(--font-head);font-size:1.05rem;margin-bottom:12px;}
+.burnout-opts{display:flex;flex-direction:column;gap:8px;}
+.burnout-opt{
+  padding:12px 14px;border:2px solid var(--text);background:var(--paper);
+  font-family:var(--font-body);font-size:0.88rem;cursor:pointer;color:var(--text);text-align:left;transition:all 0.15s;
+}
+.burnout-opt:hover{background:var(--pink-pale);transform:translate(-1px,-1px);box-shadow:2px 2px 0 var(--text);}
+.burnout-response{margin-top:18px;border-top:2px dashed var(--pink-light);padding-top:16px;animation:fadeIn 0.3s ease;}
+.burnout-action-box{background:var(--pink-pale);border:2px solid var(--text);padding:12px 14px;margin-top:10px;}
+.burnout-reset{margin-top:16px;background:none;border:2px solid var(--text);padding:6px 14px;font-family:var(--font-mono);font-size:0.68rem;cursor:pointer;color:var(--text);text-transform:uppercase;letter-spacing:1px;transition:all 0.15s;display:block;}
+.burnout-reset:hover{background:var(--text);color:var(--paper);}
+
+/* TOAST */
+#toast{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);
+  background:var(--text);color:var(--paper);padding:10px 22px;
+  font-family:var(--font-head);box-shadow:4px 4px 0 var(--pink);
+  transition:transform 0.4s ease;z-index:600;border:2px solid var(--pink);
+}
+#toast.show{transform:translateX(-50%) translateY(0);}
+
+/* MOBILE */
+@media(max-width:900px){
+  .cover-stickers{display:none;}
+  .concepts-wrap{grid-template-columns:1fr;}
+  .tool-facts{grid-template-columns:repeat(2,1fr);}
+  .journal-content{padding:20px;}
+}
+@media(max-width:700px){
+  #dashboard-page{flex-direction:column;}
+  .sidebar{
+    width:100%;flex-direction:row;height:auto;
+    border-right:none;border-bottom:2px solid var(--text);
+    order:2;overflow-x:auto;
+  }
+  .sidebar-logo,.sidebar-progress,.sidebar-bottom{display:none;}
+  .nav-tabs{flex-direction:row;padding:8px;gap:4px;overflow-x:auto;flex-wrap:nowrap;}
+  .nav-tab{flex-shrink:0;padding:8px 12px;font-size:0.62rem;}
+  .nav-tab-badge{display:none;}
+  .journal-content{order:1;padding:16px;}
+  .hot-grid{grid-template-columns:1fr;}
+  .tool-grid{grid-template-columns:repeat(2,1fr);}
+  .time-grid{grid-template-columns:repeat(2,1fr);}
+  .tool-facts{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:400px){
+  .cover-center h1{font-size:3rem;}
+  .cover-frame{height:360px;}
+}
+</style>
+</head>
+<body data-theme="light">
+
+<div id="global-progress"><div id="global-progress-fill"></div></div>
+<div id="toast"></div>
+
+<!-- ONBOARDING OVERLAY -->
+<div id="onboard-overlay" class="hidden">
+  <div class="onboard-card">
+    <div class="onboard-header">
+      Welcome to Legally Bright 👋
+      <p>Your tech journal. Here's what you need to know before you start.</p>
+    </div>
+    <div class="onboard-steps">
+      <div class="onboard-step">
+        <div class="onboard-step-num">1</div>
+        <div class="onboard-step-text">
+          <strong>Pick a pathway</strong>
+          <span>Use the left sidebar to navigate between sections. Start with Pathways for structured learning roadmaps.</span>
+        </div>
+      </div>
+      <div class="onboard-step">
+        <div class="onboard-step-num">2</div>
+        <div class="onboard-step-text">
+          <strong>Learn your way</strong>
+          <span>In Concepts, pick a character — Phoebe, Hermione, Rory, or Elle — and the same idea explained in their voice.</span>
+        </div>
+      </div>
+      <div class="onboard-step">
+        <div class="onboard-step-num">3</div>
+        <div class="onboard-step-text">
+          <strong>Open Survival when it gets hard</strong>
+          <span>It's not a blog post. It's a real protocol for when you're stuck, frustrated, or doubting yourself.</span>
+        </div>
+      </div>
+    </div>
+    <button class="onboard-start" onclick="closeOnboard()">Let's go →</button>
+    <div class="onboard-skip" onclick="closeOnboard()">Skip intro</div>
+  </div>
+</div>
+
+<!-- HOME PAGE -->
+<section id="home-page">
+  <div class="cover-wrap">
+    <div class="cover-tape"></div>
+    <div class="cover-tape-r"></div>
+    <div class="cover-frame" onclick="enterJournal()" title="Click to open">
+      <div class="cover-center">
+        <h1>Legally<br>Bright</h1>
+        <span class="cover-sub">Tech minus the intimidation</span>
+      </div>
+      <div class="cover-open-btn">Open Journal →</div>
+    </div>
+    <div class="cover-caption">Scrapbook Journal · 5 Sections · 11 Concepts · No Jargon</div>
+    <div class="cover-stickers">
+      <div class="sticker"><span class="sticker-num">01</span>Tech minus the intimidation</div>
+      <div class="sticker"><span class="sticker-num">02</span>Pretty clear beats pretty complicated</div>
+      <div class="sticker"><span class="sticker-num">03</span>Guessing isn't strategy</div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard-page" class="hidden">
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      Legally Bright
+      <small>Your Dev Journal</small>
+    </div>
+    <div class="nav-tabs">
+      <div class="nav-tab active" onclick="switchTab('pathways',this)" data-tab="pathways">
+        <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
+        <span class="nav-tab-label">Pathways</span>
+      </div>
+      <div class="nav-tab" onclick="switchTab('hot',this)" data-tab="hot">
+        <svg viewBox="0 0 24 24"><path d="M12 2C12 2 17 8 15 13c0 0 2.5-2.5 2-6 0 0 4 4 3 10-1 5-5 7-8 7s-8-3-8-8c0-4 3-6 3-6s-.5 3 1.5 4.5C9.5 14 12 2 12 2z"/></svg>
+        <span class="nav-tab-label">What's Hot</span>
+        <span class="nav-tab-badge">3</span>
+      </div>
+      <div class="nav-tab" onclick="switchTab('tools',this)" data-tab="tools">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        <span class="nav-tab-label">Toolkit</span>
+      </div>
+      <div class="nav-tab" onclick="switchTab('mistakes',this)" data-tab="mistakes">
+        <svg viewBox="0 0 24 24"><polyline points="8 6 2 12 8 18"/><polyline points="16 6 22 12 16 18"/></svg>
+        <span class="nav-tab-label">Mistakes</span>
+      </div>
+      <div class="nav-tab" onclick="switchTab('concepts',this)" data-tab="concepts">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span class="nav-tab-label">Concepts</span>
+      </div>
+      <div class="nav-tab" onclick="switchTab('survival',this)" data-tab="survival">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="nav-tab-label">Survival Kit</span>
+      </div>
+    </div>
+    <div class="sidebar-progress">
+      <div class="progress-label">Concepts learned</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="sidebar-progress-fill" style="width:0%"></div></div>
+      <div class="progress-count" id="sidebar-progress-count">0 / 11</div>
+    </div>
+    <div class="sidebar-bottom">
+      <button class="sidebar-btn" onclick="toggleTheme()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+        Toggle Theme
+      </button>
+      <button class="sidebar-btn" onclick="goHome()">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Cover Page
+      </button>
+    </div>
+  </nav>
+
+  <main class="journal-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="avatar">S</div>
+        <div>
+          <div class="user-name">Student</div>
+          <div class="user-level" id="user-level-label">Level 1 Explorer</div>
+        </div>
+      </div>
+      <button class="theme-btn" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+    <div id="content-area"></div>
+  </main>
+</section>
+
+<script>
+// ========= DATA =========
+const conceptData={
+  api:{
+    phoebe:"Okay so, you know how when you're at a restaurant and you don't go into the kitchen yourself? You just tell the waiter what you want and they bring it back? An API is the waiter! Your app says 'hey I want today's weather for Mumbai' and the API goes off, talks to the weather server, and brings the answer back. You never see the kitchen. You don't need to. Isn't that kind of beautiful?",
+    hermione:"An API (Application Programming Interface) is a defined contract between two software systems. The client sends an HTTP request — GET, POST, PUT, or DELETE — to a specific endpoint URL with optional headers and a body payload. The server processes the request and returns a structured response, typically JSON, along with a status code. RESTful APIs follow stateless, resource-based architecture principles.",
+    rory:"Definition: API = Application Programming Interface. It's a communication layer between systems. Key terms — Endpoint: the URL where the request is sent. HTTP Methods: GET (fetch data), POST (send data), PUT (update), DELETE (remove). Response codes: 200 OK, 404 Not Found, 500 Server Error. Data format: usually JSON. REST = Representational State Transfer.",
+    elle:"Think of an API like the counter at a Starbucks. You don't go behind the counter and make your own latte — you just say 'oat milk iced vanilla latte, please.' The barista (the server) knows exactly how to make it. They hand it to you finished. That little moment of ordering? That's your API call. The menu is the documentation. The drink is the response."
+  },
+  dom:{
+    phoebe:"So your webpage is kind of like a family tree, right? There's a grandparent — that's the html tag — and then it has kids like head and body, and body has kids like div and p and h1... JavaScript can look at this family tree and say 'find me the p with this class' and then change what it says! It's like being able to reach into the family portrait and give everyone a new haircut.",
+    hermione:"The DOM — Document Object Model — is a tree-structured, in-memory representation of an HTML document exposed as a JavaScript API. Each HTML element becomes a Node object. Key methods: getElementById() for O(1) direct lookup, querySelector() for CSS-selector-based traversal, addEventListener() for event binding. The DOM is live — mutations trigger reflow and repaint in the rendering engine.",
+    rory:"DOM = Document Object Model. Structure: tree of nodes. Root = document. Child nodes = html > head/body > elements. Key methods: document.getElementById('id'), document.querySelector('.class'), element.innerHTML, element.style, element.classList.add/remove. Events: addEventListener('click', fn). Important concept: Event Bubbling — events propagate up the DOM tree from child to parent.",
+    elle:"Okay imagine your webpage is a really well-organized closet. The DOM is basically the blueprint of that closet — every shelf, every drawer, every hanger is a node. JavaScript is you with the ability to reach in and rearrange everything. Want to change the color of that top on the third shelf? querySelector('.top').style.color = 'pink'. Done. Closet updated. And honestly? Pink was the right choice."
+  },
+  async:{
+    phoebe:"Normal code is like doing everything one at a time — you put your shoes on, then you find your keys, then you leave. But async code is like... you start the coffee maker AND THEN you go get dressed while it's still brewing! You don't just stand there watching it. Await is you pausing to grab the coffee once it's actually done.",
+    hermione:"Asynchronous execution allows the JavaScript event loop to continue processing while awaiting I/O-bound operations. Promises represent future values with three states: pending, fulfilled, rejected. Async/Await is syntactic sugar over Promise chains. Always pair await with try/catch for rejection handling. Never use async/await inside forEach — use for...of instead.",
+    rory:"Async/Await key facts: async before a function = it always returns a Promise. await pauses that function until the Promise resolves. Without await, you get a Promise object, not the value. Error handling: wrap in try/catch. Common mistake: forgetting await and wondering why you got Promise{pending}. Async doesn't make code run faster — it prevents blocking.",
+    elle:"So you know when you're getting a blowout and your phone is charging at the same time? You're not just sitting there waiting for the phone to charge before you do anything else. You're living your life in parallel. That's async! Your app sends a request to a server and instead of freezing and waiting, it keeps doing other things. When the server comes back? That's the promise resolving."
+  },
+  json:{
+    phoebe:"JSON is just a way to write information so computers can read it easily. It looks like a really organized shopping list with labels! Like: { name: 'Phoebe', job: 'Masseuse', cats: 0 }. Everything has a name and a value. That's it! It's the language computers use to pass notes to each other.",
+    hermione:"JSON — JavaScript Object Notation — is a lightweight, language-agnostic data serialization format. It supports six data types: string, number, boolean, null, array, and object. It must be valid — trailing commas and single quotes are illegal. JSON.parse() deserializes a string to an object; JSON.stringify() does the reverse.",
+    rory:"JSON = JavaScript Object Notation. Valid types: string (in double quotes), number, boolean, null, array [], object {}. Rules: keys must be strings in double quotes. No trailing commas. No comments. Parse with JSON.parse(). Serialize with JSON.stringify(). Common error: treating a JSON string as an object before parsing it.",
+    elle:"JSON is basically the résumé format of the internet. When apps talk to each other, they send information in a very neat, structured way — key on the left, value on the right. { 'name': 'Elle Woods', 'school': 'Harvard Law', 'gpa': 4.0 }. Organized, professional, impossible to misread. It's not code. It's very well-dressed data."
+  },
+  localhost:{
+    phoebe:"Localhost is like... your computer is pretending to be a website, but only for you! When you type localhost:3000 in your browser, you're visiting a little fake internet that only exists on your own laptop. Nobody else can see it. It's your personal practice dimension for websites!",
+    hermione:"Localhost refers to the loopback network interface (127.0.0.1). When a development server runs on localhost:3000, the OS maps port 3000 to that process. It never leaves your machine. DNS resolves 'localhost' to 127.0.0.1 via the hosts file. Used to develop and test web applications before deployment.",
+    rory:"Localhost = your computer talking to itself. IP address: 127.0.0.1. The :3000 = the port number — like an apartment number in a building. Common ports: 3000 (React), 8080 (generic), 5500 (VS Code Live Server). Only visible on your machine. To share externally, use tools like ngrok.",
+    elle:"Localhost is like having a private runway show before Fashion Week. The collection is ready, but it's invite-only — just you, in your own space. Nobody outside can see it yet. You're testing, tweaking, making sure everything is perfect before it goes public. localhost:3000 is your personal front row seat to your own work-in-progress."
+  },
+  git:{
+    phoebe:"Git is like a magic time machine for your code! Every time you do a 'commit', it takes a snapshot of everything exactly as it is right now. So if you break something later — and you will, everyone does — you can just go back to a snapshot where it wasn't broken yet.",
+    hermione:"Git is a distributed version control system (DVCS) that tracks changes using a DAG of commits. Each commit stores a SHA-1 hash, a parent reference, and a tree snapshot. Branches are lightweight pointers to commits. Key operations: staging (git add), committing (git commit), branching, merging, and rebasing.",
+    rory:"Key commands: git init, git status, git add ., git commit -m 'message', git log, git branch name, git checkout name, git merge name, git push, git pull. A commit = a saved state. HEAD = where you currently are. main/master = primary branch.",
+    elle:"Git is like a really thorough diary that saves every version of every look you've ever put together. You try a new outfit — git commit. Hate it? git checkout and you're back in your best look instantly. Sharing with a study partner? git push. They git pull. Nothing gets lost. It's honestly very chic."
+  },
+  framework:{
+    phoebe:"A framework is like... someone already built the kitchen for you! Instead of making the stove and fridge from scratch, you just move into a kitchen that's already set up and start cooking. React, Vue, Angular — those are all kitchens. You still cook your own food, but the structure is already there!",
+    hermione:"A framework is an opinionated scaffolding that dictates application architecture. Unlike a library, a framework calls your code — this is the Inversion of Control principle. Frontend frameworks like React use component-based architecture with virtual DOM reconciliation.",
+    rory:"Framework vs Library: a library is code you call. A framework calls your code (Inversion of Control). Frontend frameworks: React (Meta), Vue (progressive), Angular (Google). Backend: Express (Node.js), Django (Python). A framework provides structure, routing, and state management patterns.",
+    elle:"A framework is like a law firm that's already fully set up when you walk in — offices organized, filing system exists, workflow established. You didn't build any of that. You just show up, know the rules, and start doing your work. React is one firm. Vue is another. Different cultures, same job."
+  },
+  server:{
+    phoebe:"A server is just another computer! But it's a computer that's always on, always connected to the internet, and its whole job is to answer when other computers ask it questions. When you visit a website, your computer says 'hey server, can I have that webpage?' and the server says 'sure here you go!'",
+    hermione:"A server is a process that listens on a network port for incoming client requests and returns responses. Web servers handle HTTP/HTTPS traffic. The client-server model follows request-response cycles. Servers can be stateful or stateless. Common web servers: Nginx, Apache.",
+    rory:"Server basics: a server responds to requests over a network. HTTP Request contains: method (GET/POST), URL, headers, optional body. Response contains: status code, headers, body. Types: web server (files), app server (logic), database server (data). Hosting: AWS, Heroku, Vercel, Railway.",
+    elle:"A server is basically your very dedicated personal assistant who never sleeps. You call and say 'I need the Legally Bright homepage.' Your assistant finds it, packages it up perfectly, and sends it right back. Thousands of calls simultaneously, no complaints. Their entire purpose is to wait for requests and respond."
+  },
+  'css-box-model':{
+    phoebe:"Every HTML element is like a little present! There's the gift itself — content. Then bubble wrap around it — padding. Then the box — border. And the space between this box and the other presents around it — margin. Once you see it this way you can never unsee it!",
+    hermione:"The CSS Box Model defines how every element occupies space. Inside out: content, padding (transparent space inside border), border (styled edge), margin (transparent space outside). box-sizing: border-box changes width calculation to include padding and border — nearly always preferable.",
+    rory:"Box model layers (inside out): content > padding > border > margin. Width by default = content only. With box-sizing: border-box, width includes padding + border. Key: padding is inside the border (takes background color). Margin is outside (always transparent). Vertical margins collapse between adjacent elements.",
+    elle:"The box model is basically the outfit equation for every element. Content is your body. Padding is your outfit — inside, it moves with you. Border is the statement belt wrapping the outside. Margin is personal space you maintain between yourself and others at a party. box-sizing: border-box means your stated width includes the belt. Common sense."
+  },
+  variables:{
+    phoebe:"A variable is like a little labeled box where you keep stuff! You write 'let color = pink' and now whenever you say 'color' your computer knows you mean pink. You can change what's in the box later — unless you use const, which means the box is sealed forever!",
+    hermione:"In JavaScript, variables are declared with let (block-scoped, reassignable), const (block-scoped, not reassignable), or legacy var (function-scoped, hoisted — avoid). Types are dynamic. JavaScript uses pass-by-value for primitives and pass-by-reference for objects and arrays.",
+    rory:"Three declarations: var (old, avoid), let (block-scoped, reassignable), const (block-scoped, not reassignable). Block scope = exists only inside {} where defined. Primitive types: string, number, boolean, null, undefined, symbol, bigint. Reference types: object, array, function. const with object: reference locked, properties mutable.",
+    elle:"A variable is like a labeled section in your planner. You write 'let outfit = power suit' and every time your code mentions outfit, it knows. Use let when it might update — like today's schedule. Use const when it's set in stone — like your name or your GPA. var is the old system everyone's moved on from. Like wearing Juicy Couture in 2024 — technically possible, not recommended."
+  },
+  functions:{
+    phoebe:"A function is like a recipe! You write down all the steps once, give it a name, and whenever you want to make that thing you just say the name and it does all the steps. You can even give it ingredients — those are called parameters. Like a recipe for cookies but you can swap chocolate chips for raisins.",
+    hermione:"A function is a reusable block of code that performs a specific task. Functions accept parameters and return values. In JavaScript, functions are first-class objects — assignable, passable as arguments, returnable. Function types: declarations (hoisted), expressions (not hoisted), arrow functions (lexical this binding). Pure functions have no side effects.",
+    rory:"Function anatomy: function name(param1, param2) { return value; }. Arrow: const name = (param) => value. Key terms: parameter = variable in the definition. Argument = actual value passed when calling. Return = the output. Hoisting: declarations are hoisted; expressions are not. Default parameters: function greet(name = 'friend') {}.",
+    elle:"A function is a signature move. You define it once — this is how I enter a room, this is how I make my argument — and then you call on it whenever the situation demands. function makeArgument(case) { return winningPoint; }. You can pass it different cases and it applies your framework each time. That's parameters. It's not robotic — it's having a framework for excellence."
+  }
+};
+const chars=[
+  {key:'phoebe',label:'Phoebe',full:'Phoebe Buffay · Friends'},
+  {key:'hermione',label:'Hermione',full:'Hermione Granger · Harry Potter'},
+  {key:'rory',label:'Rory',full:'Rory Gilmore · Gilmore Girls'},
+  {key:'elle',label:'Elle',full:'Elle Woods · Legally Blonde'}
+];
+const conceptList=[
+  {key:'api',label:'API',tag:'JS'},
+  {key:'dom',label:'DOM',tag:'JS'},
+  {key:'async',label:'Async / Await',tag:'JS'},
+  {key:'json',label:'JSON',tag:'DATA'},
+  {key:'localhost',label:'Localhost',tag:'WEB'},
+  {key:'git',label:'Git',tag:'TOOL'},
+  {key:'framework',label:'Frameworks',tag:'WEB'},
+  {key:'server',label:'What is a Server?',tag:'WEB'},
+  {key:'css-box-model',label:'CSS Box Model',tag:'CSS'},
+  {key:'variables',label:'Variables',tag:'JS'},
+  {key:'functions',label:'Functions',tag:'JS'}
+];
+const conceptQuestions={
+  api:"In your own words, what is the job of an API?",
+  dom:"What does the DOM let JavaScript do to a webpage?",
+  async:"Why would you use async/await instead of normal code?",
+  json:"What is JSON used for, and what does it look like?",
+  localhost:"What does it mean when a site runs on localhost?",
+  git:"What is a git commit, and why would you use it?",
+  framework:"What's the difference between a library and a framework?",
+  server:"What is a server's job when you visit a website?",
+  'css-box-model':"What are the four layers of the CSS box model, inside out?",
+  variables:"What's the difference between let and const?",
+  functions:"What does a function parameter do?"
+};
+const conceptAnswers={
+  api:"An API is the messenger between two systems — your app asks for something, the API retrieves it from the server and returns the response. You never need to know how the server works internally.",
+  dom:"The DOM lets JavaScript find, read, and change any element on a webpage — its text, style, attributes — without reloading the page.",
+  async:"Normal code waits for each line before moving on. Async lets the program keep running while waiting for slow things (like loading data), so the page doesn't freeze.",
+  json:'JSON is a structured text format for sending data between systems. It looks like: { "name": "value" }. Keys are always in double quotes, supports strings, numbers, booleans, arrays, objects.',
+  localhost:"Localhost means your browser loads a site living on your own computer — not the public internet. Only you can see it. It's your private development environment.",
+  git:"A git commit is a saved snapshot of your project at a specific moment. If you break something later, you can return to any commit and restore that exact state.",
+  framework:"A library gives you tools you call when you want them. A framework gives you a structure and calls your code — this is Inversion of Control.",
+  server:"A server listens for requests from browsers and sends back the correct response — a webpage, data, or a file. Its entire purpose is to wait and respond.",
+  'css-box-model':"Content > Padding > Border > Margin. Content is the element itself. Padding is inner space. Border wraps padding. Margin is outer space between elements.",
+  variables:"let can be reassigned; const cannot. Both are block-scoped. Use const by default, let only when you know the value will change.",
+  functions:"A parameter is a placeholder variable in the function definition that receives the actual value (argument) passed when the function is called."
+};
+const errorsDB=[
+  {id:'referenceerror',tag:'js',vibe:"The one that makes you feel like your code has amnesia.",title:'ReferenceError: x is not defined',keywords:['referenceerror','not defined','is not defined'],feeling:"You stare at the screen wondering if your variable just... disappeared. It did not. You just never introduced it properly.",why:"JavaScript looked for a variable you mentioned but couldn't find it — either because you never created it, spelled it differently, or tried to use it before it existed.",wrongAttempts:["Refreshing the page hoping the error goes away on its own.","Adding console.log everywhere except near the actual problem line.","Googling 'ReferenceError' and reading 20 Stack Overflow threads about different errors."],fix:"Check the spelling of the variable name — one capital letter in the wrong place will do this. Then make sure you defined it (with let, const, or var) before the line where you use it. If it's inside a function, you can't use it outside that function."},
+  {id:'typeerror-null',tag:'js',vibe:"The most frustrating one because it usually means something loaded out of order.",title:'TypeError: Cannot read properties of null',keywords:['typeerror','cannot read properties of null','null','cannot read property'],feeling:"You set something up, it worked yesterday, and now suddenly it's null. Nothing makes sense.",why:"You tried to do something with an element or value that turned out to be null. This usually happens when querySelector() can't find the element you asked for.",wrongAttempts:["Checking the CSS class name instead of the JavaScript selector.","Rewriting the entire function when only the element reference is broken.","Adding ! operators randomly hoping to force it to work."],fix:"Add console.log(yourVariable) right before the broken line. If it prints null, your selector or variable reference is wrong. Also check if your script runs before the HTML has loaded — if so, wrap your code in a DOMContentLoaded event listener."},
+  {id:'typeerror-function',tag:'js',vibe:"This one means you called something like a function… but it wasn't one.",title:'TypeError: x is not a function',keywords:['is not a function','typeerror','not a function'],feeling:"You're 100% sure you defined that function. You can see it right there. And yet JavaScript disagrees with you.",why:"You called something with () expecting it to run, but JavaScript found that variable to be a string, number, or undefined — not a function.",wrongAttempts:["Rewriting the function definition when it's actually fine.","Adding () to things that already have () (making it worse).","Assuming it's a browser compatibility issue."],fix:"Console.log the thing you're calling right before the error line. Check: is it actually a function? Look for variable names that accidentally overwrite your function name."},
+  {id:'syntaxerror',tag:'js',vibe:"The grammar police showed up and they are not happy.",title:'SyntaxError: Unexpected token',keywords:['syntaxerror','unexpected token','unexpected end','syntax error'],feeling:"The whole script refuses to run because of one missing character somewhere.",why:"JavaScript found something it didn't expect — usually a missing bracket, parenthesis, or comma. The error line number is your starting point but the mistake is often a few lines above.",wrongAttempts:["Looking at the exact line the error mentions instead of lines above it.","Adding random semicolons everywhere.","Commenting out half the file to isolate it."],fix:"Look 2-5 lines above the error line. Search for: missing closing bracket }, missing parenthesis ), unclosed string quote, or a comma in the wrong place. VS Code's red squiggle often shows it."},
+  {id:'css-not-applying',tag:'css',vibe:"You wrote the CSS. You saved the file. Nothing happened. Cool.",title:'CSS styles not applying',keywords:['css not working','css not applying','styles not showing','style not updating'],feeling:"You're absolutely certain you wrote it correctly. The selector looks right. The browser just refuses.",why:"The CSS file isn't linked correctly, there's a typo in the class or id name, another rule is overriding yours, or the browser is showing a cached version.",wrongAttempts:["Rewriting the entire CSS rule when only the selector name has a typo.","Adding !important everywhere (creates new problems).","Closing and reopening VS Code."],fix:"Hard reload with Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac). Then open DevTools > Elements > click your element > Styles panel. Crossed out rules = a more specific rule is winning. Check your class name matches exactly."},
+  {id:'css-layout-broken',tag:'css',vibe:"The layout looked fine on your screen. Then you opened it on your phone.",title:'Layout is completely broken on mobile',keywords:['layout broken','mobile layout','responsive','overflow','scrollbar','width overflow'],feeling:"You did everything right on desktop and then someone checks it on their phone and it looks like the site exploded.",why:"One element is wider than the screen — usually because of a fixed width in pixels, or padding that pushes content outside the viewport.",wrongAttempts:["Guessing which element is causing it and changing random widths.","Adding overflow: hidden to body (hides the symptom, not the cause).","Giving up and saying 'mobile support coming soon.'"],fix:"Open DevTools > click device toggle (top-left) > switch to mobile view. Add this CSS: * { outline: 1px solid red; } to see which element is overflowing. Then change fixed pixel widths to max-width or percentage, and use box-sizing: border-box."},
+  {id:'html-image-broken',tag:'html',vibe:"There's a little broken image icon where your photo should be. Classic.",title:'Image not displaying (broken image icon)',keywords:['image not showing','broken image','img not loading','image not loading','src'],feeling:"You added the image tag, you saved the file, and you get that sad little broken rectangle.",why:"The file path in your src attribute doesn't match where the image actually is. HTML is case-sensitive on some servers — Image.jpg and image.jpg are different.",wrongAttempts:["Re-downloading the image thinking it's corrupted.","Changing the image format hoping that fixes it.","Using an absolute path like C:/Users/You/Desktop/photo.jpg."],fix:"Check the path carefully. Right-click your image in VS Code's file explorer, copy the relative path, paste it into src. Never use full computer paths like C:/... — they break the moment you share the file."},
+  {id:'undefined-vs-null',tag:'js',vibe:"Two words that both mean 'nothing' but cause completely different problems.",title:'undefined vs null confusion',keywords:['undefined','null','undefined vs null'],feeling:"Both look like 'nothing' so why is JavaScript throwing a fit about which kind of nothing it is?",why:"undefined = variable was declared but never given a value. null = deliberately set to 'nothing' by you or the code. They fail differently in different situations.",wrongAttempts:["Using == instead of === (treats them as same, causing silent bugs).","Checking if (variable) which is false for both, 0, and empty strings.","Setting things to undefined manually."],fix:"Use === to check: if (x === undefined) or if (x === null). To check for either: if (x == null) — one of the rare cases where == is intentional. Going forward: undefined = I forgot to give this a value. null = I deliberately set this to empty."}
+];
+const toolData={
+  vscode:{name:'VS Code',tagline:'Your Code Editor',maker:'Microsoft',free:'100% Free',use:'Writing code',level:'Total beginner',modes:{beginner:"VS Code is where you write your code. Think of it like Microsoft Word, but instead of writing essays, you're writing instructions for a computer. It highlights your code in different colors to help you read it faster, catches typos before you run anything, and has a built-in file browser so you can see all your project files at once.",metaphor:"VS Code is your writing desk — but the smart kind that has a lamp that lights up keywords, a drawer that auto-organizes your files, and a little assistant whispering 'hey, you forgot a closing bracket on line 14.' It doesn't write the code for you, but it makes the environment as mistake-proof as possible.",technical:"VS Code is a lightweight, open-source Electron-based editor by Microsoft. It supports Language Server Protocol (LSP) for IntelliSense, integrated Git, debugging via Debug Adapter Protocol, and a rich extension API (40,000+ extensions). Built on Monaco Editor with TypeScript at its core.",exam:"VS Code = Source code editor by Microsoft. Key features: IntelliSense (autocomplete), integrated terminal, Git integration, Extensions marketplace, multi-cursor editing, Emmet support. NOT an IDE — lightweight editor. Difference: IDE compiles/runs code; VS Code needs extensions."},first:"Download free at code.visualstudio.com. Create a new file, save it as index.html, type an exclamation mark and press Tab. Watch what happens.",dyk:"VS Code's 'Go to Definition' feature (F12) lets you jump to where any function was originally written — even inside libraries you didn't write. Developers use this constantly."},
+  github:{name:'GitHub',tagline:'Cloud Storage for Code',maker:'Microsoft (2018)',free:'Free tier',use:'Saving and sharing code',level:'Week 2+',modes:{beginner:"GitHub is where your code lives on the internet. Imagine Google Docs, but for code — and it keeps every single version you've ever saved, so you can always go back in time if you break something. It's how developers share projects and how employers look at your work.",metaphor:"GitHub is like a magical photo album for your project. Every commit is like taking a photo of your entire codebase at that exact moment. You can flip back through the album to any point in history. And just like sharing a Google Photos album, you can invite collaborators without ever overwriting anyone's work.",technical:"GitHub is cloud-based hosting for Git repositories. Key concepts: repos, branches, commits, pull requests (PRs), merging, forking, and GitHub Actions for CI/CD. Git uses SHA-1 hashes for every commit, creating an immutable history.",exam:"Git is not GitHub. Git = local version control (command line). GitHub = cloud hosting for Git repos. Key commands: git init, git add, git commit, git push, git pull, git clone, git branch, git merge. A Pull Request = request to merge one branch into another."},first:"Create a free account at github.com. In VS Code, open the terminal and type: git init → git add . → git commit -m 'my first commit'. You've just taken your first snapshot.",dyk:"GitHub hosts over 420 million repositories and is the world's largest source code host."},
+  devtools:{name:'Chrome DevTools',tagline:'X-Ray Vision for Webpages',maker:'Google (Chrome)',free:'Built into Chrome',use:'Inspecting and debugging',level:'Use from Day 1',modes:{beginner:"Chrome DevTools is built right into your browser. Right-click anything on any website and click 'Inspect' — suddenly you can see all the HTML and CSS behind it. You can even click and edit it live! It's also how you see error messages when your JavaScript breaks.",metaphor:"DevTools is like having X-ray glasses for websites. Every button, every image, every layout is exposed — you can see exactly what HTML is holding things together and what CSS is making it look that way. You can even edit things live, like a surgeon making temporary changes.",technical:"Chrome DevTools is a suite built into Chromium. Key panels: Elements (DOM/CSS inspection), Console (JS REPL, runtime errors, console.log output), Network (HTTP request waterfall), Sources (JS debugger with breakpoints), Performance (flame graph), Application (localStorage, cookies).",exam:"DevTools tabs: Elements = inspect/edit DOM/CSS live. Console = run JS, see errors. Network = watch HTTP requests. Application = localStorage, cookies. Shortcut: F12 or Cmd+Opt+I (Mac) / Ctrl+Shift+I (Windows). Lighthouse = audit accessibility, SEO, performance."},first:"Open Chrome, go to any website, press F12. Click the Elements tab. Hover over any text — watch it highlight. Double-click the text in the panel to edit it. You just modified a website (temporarily).",dyk:"You can type any JavaScript directly in the Console tab and it runs on the current page. Try: document.body.style.background = 'hotpink'"},
+  terminal:{name:'The Terminal',tagline:'Talking Directly to Your Computer',maker:'Your OS (built-in)',free:'Built-in',use:'Running commands',level:'Week 2',modes:{beginner:"The Terminal is a window where you type commands directly to your computer — no clicking, just typing. You only ever need about 5 commands to start. You use it to run your code, install tools, and navigate your folders. VS Code has one built in — press Ctrl + backtick.",metaphor:"Using a GUI is like ordering from a restaurant menu. The Terminal is like walking into the kitchen and telling the chef exactly what you want and when. Faster, more powerful, slightly more chaotic. But once you learn the language, you can do in seconds what takes minutes of clicking.",technical:"The terminal is a CLI providing direct shell access to the OS. On macOS, default shell is zsh. On Windows, PowerShell or WSL is standard. Key operations: filesystem traversal (cd, ls), file manipulation (mkdir, touch, rm), process execution, piping (|), redirection (>).",exam:"Essential commands: pwd (current directory), ls (list files), cd name (change folder), cd .. (go back), mkdir name (create folder), touch file.html (create file), rm file (delete). On Windows: dir instead of ls, del instead of rm."},first:"In VS Code, press Ctrl+backtick to open the built-in terminal. Type: pwd and press Enter. It shows you exactly where on your computer you are right now.",dyk:"The word 'terminal' comes from the days when computers were huge machines in server rooms. People used 'terminal' devices — screens and keyboards — to send instructions remotely."},
+  figma:{name:'Figma',tagline:'Design Before You Code',maker:'Figma Inc.',free:'Free for students',use:'UI/UX design',level:'Optional but powerful',modes:{beginner:"Figma is like Canva, but built specifically for designing websites and apps. Before a developer writes a single line of code, a designer uses Figma to draw what the final product should look like — drag boxes, add colors, pick fonts — without any code.",metaphor:"Figma is your architectural blueprint. Before a builder hammers a nail, they have detailed drawings of every room. Figma is where you draw those blueprints for a website — this button goes here, this color goes there. Coding without Figma is like building a house without ever looking at the blueprint.",technical:"Figma is a browser-based collaborative vector design tool. Key concepts: Auto Layout (flexbox-like), Variants (interactive component states), Design Tokens (CSS variables in design systems), Prototyping (click-through flows). Exports to CSS, SVG, PNG.",exam:"Figma key concepts: Frames = containers (like divs). Components = reusable elements (like React components). Auto Layout = responsive layout in design. Variants = different states (hover, active, disabled). Prototype mode = link frames to simulate user flows."},first:"Create a free account at figma.com. Start a new design file, draw a rectangle (R key), add text (T key), and try changing colors. You're wireframing — no code needed.",dyk:"Figma runs 100% in the browser. When Adobe tried to acquire it for $20 billion in 2022, regulators blocked the deal. Figma remained independent."},
+  npm:{name:'npm',tagline:'The App Store for Code',maker:'npm Inc. / GitHub',free:'Free',use:'Installing packages',level:'Week 3+',modes:{beginner:"npm stands for Node Package Manager. It's like an App Store, but instead of phone apps, you're installing chunks of code that other developers wrote. Need beautiful charts? Package. Need to send emails? Package. Type one command and get code that took someone else months to write.",metaphor:"npm is like IKEA for developers. You need a shelf? You don't grow the wood yourself. You go to IKEA, pick the flat-pack, bring it home, assemble it. npm is the store with millions of ready-made pieces. 'npm install' is you picking something off the shelf.",technical:"npm is the default package manager for Node.js. Reads package.json to manage dependencies and devDependencies. Key files: package.json (project config), package-lock.json (exact version lockfile), node_modules/ (installed packages — never commit to Git). Core commands: npm install, npm run, npm init, npx.",exam:"Key commands: npm init -y (create package.json), npm install packagename, npm install packagename --save-dev, npm run scriptname, npx command. package.json = project manifest. node_modules = never push to GitHub (add to .gitignore)."},first:"Open terminal and type: node --version. If you see a version number, npm is ready. If not, download at nodejs.org. Then: npm --version to confirm.",dyk:"npm's registry has over 2 million packages — the largest software registry in the world."}
+};
+const stuckProtocols={
+  error:{header:'Console error protocol',steps:[
+    {title:'Read the error exactly as written',body:'The first line is most important. Note the type — <strong>ReferenceError</strong>, <strong>TypeError</strong>, <strong>SyntaxError</strong> — and the message after the colon. Do not skip ahead.'},
+    {title:'Go to the line number it mentions',body:'The error includes a file name and line number like <span class="proto-code">script.js:42</span>. Go there first. The actual problem is usually within 5 lines above.'},
+    {title:'console.log the thing that\'s breaking',body:'Before the broken line, add <span class="proto-code">console.log(yourVariable)</span>. Refresh. Look at what prints — null, undefined, or a wrong value tells you exactly where the chain broke.'},
+    {title:'Copy the exact error text and search it',body:'Paste the full error into a search engine with "javascript" before it. You are almost certainly not the first person to see this error.'},
+    {title:'Check the Mistakes tab',body:'The Mistakes section covers the most common errors with plain-language explanations. Open it and search for your error type.'}
+  ]},
+  nothing:{header:'Silent failure protocol',steps:[
+    {title:'Open the console first',body:'Press F12 and go to the Console tab. Silent failures almost always have errors you haven\'t seen. If there\'s anything red, that\'s your actual problem.'},
+    {title:'Check that your files are actually connected',body:'If CSS isn\'t applying, check the <span class="proto-code">href</span> path in your link tag. If JavaScript isn\'t running, check the <span class="proto-code">src</span> path in your script tag.'},
+    {title:'Hard-reload the browser',body:'Press <span class="proto-code">Ctrl+Shift+R</span> (Windows) or <span class="proto-code">Cmd+Shift+R</span> (Mac). Browsers cache aggressively — you may be looking at a previous version of your file.'},
+    {title:'Add a test console.log at the very top of your JS file',body:'Type <span class="proto-code">console.log(\'script is running\')</span> at line 1. If it doesn\'t print, your file isn\'t loading at all — it\'s a path issue, not a logic issue.'},
+    {title:'Isolate the problem',body:'Comment out everything except one small piece. Does that piece work? Add the next piece back. Repeat until you find what\'s breaking the rest.'}
+  ]},
+  hour:{header:'One-hour rule protocol',steps:[
+    {title:'Stop and write down what you think the problem is',body:'In plain sentences write: "I think the problem is X because Y." The act of writing changes how your brain processes it. Rubber duck debugging works for the same reason.'},
+    {title:'Step away for at least 15 minutes',body:'Not optional. Get water, go outside. The part of your brain working in the background is not accessible while you\'re staring at the screen.'},
+    {title:'Search for the exact piece that isn\'t working',body:'Not "why isn\'t my project working." Isolate the smallest failing unit: "javascript fetch not returning data" gets you somewhere. "my website doesn\'t work" does not.'},
+    {title:'Look at working examples first, your code second',body:'Find a working version of what you\'re trying to do on MDN or CodePen. Compare it line by line to yours. The difference is usually smaller than you expect.'},
+    {title:'If still broken, write it down and move on',body:'Mark it as unsolved and start something adjacent. Returning tomorrow with fresh eyes solves more problems than staying up four more hours.'}
+  ]},
+  understand:{header:'Lost in the concept — protocol',steps:[
+    {title:'Name exactly what you don\'t understand',body:'Not "I don\'t understand JavaScript." That\'s too wide. "I don\'t understand why this function needs a return statement" is something you can actually address.'},
+    {title:'Go to the Concepts tab',body:'Pick the character voice that usually clicks for you. Try a different character if the first one doesn\'t land. The same idea sounds completely different in different voices.'},
+    {title:'Find the simplest possible working version',body:'Stop trying to build the full thing. Build the smallest version that does one thing. Understanding one small working example beats reading five long explanations.'},
+    {title:'Describe what the code does line by line',body:'Write one plain-English sentence per line: "This line creates a variable called name." If you can\'t write the sentence, that\'s the exact line you don\'t understand yet.'},
+    {title:'Confusion is not behind-ness',body:'Understanding usually comes after building, not before. You\'re allowed to write code you don\'t fully understand, see what happens, and work backwards. This is how most developers learn most things.'}
+  ]}
+};
+const burnoutData={
+  good:{label:'Keep the momentum',text:"Good sessions are worth noticing. You're absorbing things and making progress — that's not guaranteed every time you sit down to learn. The thing that tends to end good sessions early is pushing past the natural stopping point. If you're in flow, protect it: close other tabs, silence notifications.",action:"Before you close the laptop today, write down exactly where you are and what you were about to try next. Starting the next session is much easier when you know where to pick up."},
+  frustrated:{label:'Frustrated is not failing',text:"Frustration during learning is so common it has a name: desirable difficulty. When you're pushing against something that isn't working, your brain is doing exactly what it's supposed to — trying to create a stronger neural pathway. The frustration is not a sign you're doing it wrong. It's a sign you're doing it right, just slowly.",action:"Keep going for at least 20 more minutes. If nothing has shifted by then, use the stuck protocol above. You are allowed to be frustrated and still continue."},
+  exhausted:{label:'Your working memory is full — actually stop',text:"Reading words without absorbing them is not learning. It's spending time in a way that feels like learning but doesn't produce results. Working memory has a real, physical capacity and exhaustion compresses it. Continuing past this point is not discipline — it's just slower.",action:"Close the editor. Write one sentence about what you were doing and what you'll do next. Then actually stop. Sleeping on a half-understood concept and returning in the morning has resolved more bugs than any equivalent number of exhausted hours."},
+  quitting:{label:'That thought is worth examining, not avoiding',text:"The thought 'maybe this isn't for me' arrives most reliably right at the edge of something clicking — not before it gets hard, but during the hardest part, right before it gets easier. This doesn't mean the feeling is wrong. It means it should be examined rather than acted on while you're inside it.",action:"Write down what specifically made you feel this way today. 'I couldn't get the API call to work after two hours' is specific. 'I just can't do this' is a mood, not a fact. The specific version is fixable. Return to the general version after a day of distance. It usually doesn't read the same way."}
+};
+
+// ========= STATE =========
+let currentTab='pathways';
+let currentConcept='api';
+let currentChar='phoebe';
+let currentTool=null;
+let currentToolMode='beginner';
+let currentErrFilter='all';
+let checkedConcepts=[];
+try{checkedConcepts=JSON.parse(localStorage.getItem('lb_checked')||'[]');}catch(e){}
+let hasSeenOnboard=false;
+try{hasSeenOnboard=localStorage.getItem('lb_onboard')==='1';}catch(e){}
+
+// ========= CORE =========
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+function toggleTheme(){
+  const b=document.body;
+  b.setAttribute('data-theme',b.getAttribute('data-theme')==='light'?'dark':'light');
+}
+function updateProgress(){
+  const n=checkedConcepts.length;
+  const pct=Math.round((n/11)*100);
+  document.documentElement.style.setProperty('--progress',pct+'%');
+  const fill=document.getElementById('sidebar-progress-fill');
+  const count=document.getElementById('sidebar-progress-count');
+  if(fill)fill.style.width=pct+'%';
+  if(count)count.textContent=n+' / 11';
+  const lvlEl=document.getElementById('user-level-label');
+  if(lvlEl){
+    if(n===0)lvlEl.textContent='Level 1 Explorer';
+    else if(n<4)lvlEl.textContent='Level 2 Curious Coder';
+    else if(n<8)lvlEl.textContent='Level 3 Dev in Training';
+    else if(n<11)lvlEl.textContent='Level 4 Almost There!';
+    else lvlEl.textContent='Level 5 Legally Bright ✓';
+  }
+}
+function enterJournal(){
+  document.getElementById('home-page').classList.add('hidden');
+  document.getElementById('dashboard-page').classList.remove('hidden');
+  if(!hasSeenOnboard){
+    document.getElementById('onboard-overlay').classList.remove('hidden');
+  }
+  loadTab('pathways');
+  updateProgress();
+}
+function closeOnboard(){
+  document.getElementById('onboard-overlay').classList.add('hidden');
+  hasSeenOnboard=true;
+  try{localStorage.setItem('lb_onboard','1');}catch(e){}
+}
+function goHome(){
+  document.getElementById('dashboard-page').classList.add('hidden');
+  document.getElementById('home-page').classList.remove('hidden');
+}
+function switchTab(tab,el){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  if(el)el.classList.add('active');
+  loadTab(tab);
+}
+function loadTab(tab){
+  currentTab=tab;
+  const area=document.getElementById('content-area');
+  area.style.opacity=0;
+  setTimeout(()=>{
+    area.innerHTML='';
+    renderTab(tab,area);
+    area.style.transition='opacity 0.3s';
+    area.style.opacity=1;
+  },180);
+}
+
+// ========= RENDER TABS =========
+function renderTab(tab,area){
+  if(tab==='pathways')renderPathways(area);
+  else if(tab==='hot')renderHot(area);
+  else if(tab==='tools')renderTools(area);
+  else if(tab==='mistakes')renderMistakes(area);
+  else if(tab==='concepts')renderConcepts(area);
+  else if(tab==='survival')renderSurvival(area);
+}
+
+// ── PATHWAYS ──
+function renderPathways(area){
+  area.innerHTML=`
+  <h2 class="chapter-title">Learning Pathways</h2>
+  <span class="chapter-badge">Structured Roadmaps</span>
+  <p style="font-size:1.05rem;max-width:600px;margin-bottom:24px;line-height:1.7;">Structured roadmaps for building real things. Expand a pathway to see the full step-by-step journey.</p>
+  <div id="pw-website" class="pathway-card">
+    <div class="pathway-head" onclick="togglePW('pw-website')">
+      <div><h3>Build a Website</h3><div class="pathway-sub">HTML · CSS · Deployment</div></div>
+      <span class="pathway-toggle">+</span>
+    </div>
+    <div class="pathway-body"><div class="pathway-inner">
+      <div class="meta-row"><span class="meta-pill">4–6 weeks</span><span class="meta-pill">Beginner friendly</span><span class="meta-pill">Goal: Live portfolio site</span></div>
+      <div class="roadmap">
+        ${pwSteps([
+          {w:'Week 1',t:'Learn HTML — The Skeleton',d:'HTML is the bones of every webpage. Learn headings, paragraphs, links, images, and how to structure a page logically. Don\'t worry about making it pretty yet.',res:['freeCodeCamp HTML','Build: Your About Me page'],tip:'Your first HTML file will look ugly. That\'s completely normal.'},
+          {w:'Week 2',t:'Learn CSS — The Clothing',d:'CSS is what makes things look good — colors, fonts, spacing, layout. Learn selectors, the box model, and Flexbox.',res:['CSS Tricks: Flexbox Guide','Build: Style your About Me page'],tip:'Common mistake: Trying layout before understanding the box model. Learn padding vs margin first!'},
+          {w:'Week 3',t:'Make It Responsive',d:'Your site needs to look good on phones too. Learn media queries — they\'re if-statements for screen sizes.',res:['MDN: Responsive Design','Tool: Chrome DevTools device toggle'],tip:'Resize your browser window constantly while coding.'},
+          {w:'Week 4',t:'Build Your Portfolio',d:'Put it all together. Build a multi-page portfolio: home, about, and projects sections. This is your first real deliverable.',res:['Build: 3-page portfolio site','Inspo: awwwards.com'],tip:'Don\'t wait until it\'s perfect to show people. Feedback early beats polishing alone.'},
+          {w:'Week 5–6',t:'Deploy It Live',d:'Get your site on the internet for free using GitHub Pages or Netlify. Anyone in the world can visit your URL.',res:['GitHub Pages (free)','Netlify (free + drag and drop)'],tip:'Share your live URL with at least one person. You are now a web developer.'},
+        ])}
+      </div>
+      <div class="after-box"><strong>AFTER THIS PATH →</strong>Move to the Build an App pathway to add JavaScript interactivity.</div>
+    </div></div>
+  </div>
+  <div id="pw-app" class="pathway-card">
+    <div class="pathway-head" onclick="togglePW('pw-app')">
+      <div><h3>Build an App</h3><div class="pathway-sub">JavaScript · DOM · APIs</div></div>
+      <span class="pathway-toggle">+</span>
+    </div>
+    <div class="pathway-body"><div class="pathway-inner">
+      <div class="meta-row"><span class="meta-pill">6–8 weeks</span><span class="meta-pill">Needs HTML/CSS basics</span><span class="meta-pill">Goal: Working to-do app</span></div>
+      <div class="roadmap">
+        ${pwSteps([
+          {w:'Week 1–2',t:'JavaScript Fundamentals',d:'JavaScript makes pages interactive. Learn variables, data types, functions, conditionals, and loops.',res:['javascript.info (free, excellent)','Build: Simple calculator in console'],tip:'Don\'t touch React until you\'re solid on JS fundamentals.'},
+          {w:'Week 3',t:'DOM Manipulation — Talking to the Page',d:'The DOM is the bridge between your JavaScript and the HTML you see. Learn to grab elements, change content, react to clicks.',res:['MDN: DOM Introduction','Build: Dark/light mode toggle'],tip:'Use console.log() to check what your code is doing at every step.'},
+          {w:'Week 4',t:'Events and User Interaction',d:'Events are how users communicate — clicks, keyboard input, form submissions. Learn addEventListener.',res:['MDN: Events Guide','Build: To-Do list (add and delete)'],tip:'Event delegation — add one listener to a parent instead of many to children.'},
+          {w:'Week 5',t:'Async JS and Fetching Data from APIs',d:'Real apps pull data from the internet. Learn fetch(), promises, and async/await.',res:['javascript.info: Async/Await','Practice: Open Weather API (free)'],tip:'Always use try/catch when fetching data. APIs fail sometimes!'},
+          {w:'Week 6',t:'Local Storage — Making It Remember',d:'LocalStorage lets your app save data in the browser so it persists when the page refreshes.',res:['MDN: Web Storage API','Upgrade: Add persistence to to-do app'],tip:'Always JSON.stringify before saving and JSON.parse when reading.'},
+          {w:'Week 7–8',t:'Capstone: Build and Ship Your App',d:'Combine everything: a real interface, live API data, and localStorage. Deploy on Netlify and add it to your portfolio.',res:['Deploy: Netlify','Stretch: Add a search feature'],tip:'You built something users can actually use. That\'s not nothing — that\'s everything.'},
+        ])}
+      </div>
+      <div class="after-box"><strong>AFTER THIS PATH →</strong>You're ready to explore React — a library for building complex UIs.</div>
+    </div></div>
+  </div>
+  <div class="card"><strong style="font-family:var(--font-mono);font-size:0.8rem;">NOT SURE WHERE TO START?</strong><p style="margin-top:6px;font-size:0.9rem;">Always do <strong>Build a Website</strong> first. Even if you want to build apps, you need HTML and CSS as your foundation.</p></div>
+  `;
+}
+function pwSteps(steps){
+  return steps.map((s,i)=>`
+    <div class="step">
+      <div class="step-dot">${String(i+1).padStart(2,'0')}</div>
+      <div class="step-week">${s.w}</div>
+      <div class="step-title">${s.t}</div>
+      <p class="step-desc">${s.d}</p>
+      ${s.res.map(r=>`<span class="step-res">${r}</span>`).join('')}
+      <div class="tip-box">💡 ${s.tip}</div>
+    </div>
+  `).join('');
+}
+function togglePW(id){document.getElementById(id).classList.toggle('open');}
+
+// ── WHATS HOT ──
+function renderHot(area){
+  const hot=[
+    {tag:'Trend',title:'The Rise of No-Code',body:"Tools like Webflow and Framer let designers build websites visually without writing code.",why:"It speeds up development for simple sites — and understanding what's happening under the hood still gives you an edge.",learn:"Search: 'Webflow vs coding' to understand the trade-offs."},
+    {tag:'Big Deal',title:'AI-Assisted Development',body:"Developers are using AI tools like GitHub Copilot and Claude to write boilerplate code, debug, and explore APIs faster.",why:"The skill isn't memorizing syntax anymore — it's knowing what to ask for and whether the output is correct.",learn:"Start with: 'How to use AI for coding beginners' — it's a real skill now."},
+    {tag:'Emerging',title:'WebAssembly (Wasm)',body:"Running C++, Rust, or Python directly in the browser at near-native speed — no plugins needed.",why:"Video editing, 3D games, scientific computing in the browser. Still emerging but growing fast.",learn:"Search: 'What is WebAssembly' on MDN for a beginner-friendly intro."},
+    {tag:'Stable',title:'TypeScript Everywhere',body:"TypeScript is JavaScript with types — it catches bugs before you run your code.",why:"Over 80% of new JavaScript projects use it. Hiring managers notice. Learning JS first is still correct though.",learn:"Search: 'TypeScript for JavaScript developers' once you're comfortable with JS."},
+    {tag:'Hot Right Now',title:'Component Libraries',body:"Pre-built, accessible UI components (ShadCN, Radix, MUI) that let you build professional-looking interfaces fast.",why:"You don't have to build every button from scratch. Knowing how to customize these is a real job skill.",learn:"Try: shadcn/ui.com — it has a beginner-friendly walkthrough."},
+    {tag:'Skill to Know',title:'API-First Development',body:"Build the backend API first, then connect any frontend (web, mobile, CLI) to it.",why:"The job market is full of roles that need people who understand how data moves between systems.",learn:"Search: 'REST API tutorial beginners' — starts clicking fast."}
+  ];
+  area.innerHTML=`
+  <h2 class="chapter-title">What's Hot</h2>
+  <span class="chapter-badge">Current Trends · 2025</span>
+  <div class="hot-ticker">
+    <div class="ticker-items">
+      ${['No-Code Tools Rising','AI + Dev = Normal Now','TypeScript > 80% adoption','WebAssembly growing','Component libraries standard','API-first everywhere','No-Code Tools Rising','AI + Dev = Normal Now','TypeScript > 80% adoption','WebAssembly growing','Component libraries standard','API-first everywhere'].map(t=>`<span>◆ ${t}</span>`).join('')}
+    </div>
+  </div>
+  <p style="font-size:1rem;max-width:600px;margin-bottom:22px;line-height:1.7;">Tech news, explained in plain language. No hype, no FOMO. Just what's actually happening and why it matters to you as a beginner.</p>
+  <div class="hot-grid">
+    ${hot.map(h=>`
+      <div class="hot-card">
+        <div class="hot-card-header">
+          <div class="hot-tag">${h.tag}</div>
+          <h3>${h.title}</h3>
+        </div>
+        <div class="hot-card-body">
+          <p>${h.body}</p>
+          <div class="hot-why">Why it matters for you<br><span style="font-family:var(--font-body);font-size:0.85rem;color:var(--text);font-weight:400;letter-spacing:0;text-transform:none;">${h.why}</span></div>
+          <div class="hot-action" onclick="showToast('Tip: ${h.learn.replace(/'/g,"\\'")}')">Where to learn more →</div>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+  `;
+}
+
+// ── TOOLKIT ──
+function renderTools(area){
+  area.innerHTML=`
+  <h2 class="chapter-title">The Toolkit</h2>
+  <span class="chapter-badge">Your Developer Gear</span>
+  <p style="font-size:1rem;max-width:600px;margin-bottom:24px;line-height:1.7;">Every craft has its tools. Click any tool to open its lesson — explained in the style you choose.</p>
+  <div class="tool-grid">
+    ${Object.entries(toolData).map(([k,v])=>`
+      <div class="tool-chip" onclick="openTool('${k}')" data-tool="${k}">
+        <span class="tool-name">${v.name}</span>
+        <span class="tool-tag">${v.tagline}</span>
+      </div>
+    `).join('')}
+  </div>
+  <div id="tool-panel" class="hidden"></div>
+  `;
+}
+function openTool(id){
+  document.querySelectorAll('.tool-chip').forEach(c=>c.classList.remove('active-tool'));
+  document.querySelector(`[data-tool="${id}"]`).classList.add('active-tool');
+  currentTool=id;currentToolMode='beginner';
+  const t=toolData[id];
+  const panel=document.getElementById('tool-panel');
+  panel.className='tool-panel';
+  panel.innerHTML=`
+  <div class="tool-panel-head">
+    <div>
+      <h3>${t.name}</h3>
+      <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--pink);text-transform:uppercase;letter-spacing:1px;">${t.tagline}</div>
+    </div>
+    <button class="close-btn" onclick="closeTool()">Close ✕</button>
+  </div>
+  <div class="mode-pills">
+    ${['beginner','metaphor','technical','exam'].map((m,i)=>`
+      <div class="mode-pill${i===0?' active':''}" onclick="setToolMode('${m}',this)">
+        ${['Plain English','Give Me a Metaphor','Get Technical','Exam Mode'][i]}
+      </div>
+    `).join('')}
+  </div>
+  <div class="tool-content"><p id="tool-text">${t.modes.beginner}</p></div>
+  <div class="tool-facts">
+    <div class="fact"><div class="fact-lbl">Made By</div><div class="fact-val">${t.maker}</div></div>
+    <div class="fact"><div class="fact-lbl">Free?</div><div class="fact-val">${t.free}</div></div>
+    <div class="fact"><div class="fact-lbl">Used For</div><div class="fact-val">${t.use}</div></div>
+    <div class="fact"><div class="fact-lbl">Skill Level</div><div class="fact-val">${t.level}</div></div>
+  </div>
+  <div class="tool-step"><strong>First Step</strong>${t.first}</div>
+  <div class="tool-dyk"><div class="dyk-lbl">DID YOU KNOW?</div>${t.dyk}</div>
+  `;
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),50);
+}
+function closeTool(){
+  document.getElementById('tool-panel').className='hidden';
+  document.querySelectorAll('.tool-chip').forEach(c=>c.classList.remove('active-tool'));
+  currentTool=null;
+}
+function setToolMode(mode,el){
+  if(!currentTool)return;
+  currentToolMode=mode;
+  document.querySelectorAll('.mode-pill').forEach(p=>p.classList.remove('active'));
+  if(el)el.classList.add('active');
+  const txt=document.getElementById('tool-text');
+  if(txt){txt.style.opacity=0;setTimeout(()=>{txt.textContent=toolData[currentTool].modes[mode];txt.style.transition='opacity 0.25s';txt.style.opacity=1;},140);}
+}
+
+// ── MISTAKES ──
+function renderMistakes(area){
+  area.innerHTML=`
+  <h2 class="chapter-title">Mistakes</h2>
+  <span class="chapter-badge">Real Errors. Real Fixes.</span>
+  <p style="font-size:1rem;max-width:600px;margin-bottom:22px;line-height:1.7;">Every developer has been here. Paste your exact error message below — or browse by category.</p>
+  <div class="error-search-box">
+    <div class="error-search-lbl">ERROR TRANSLATOR</div>
+    <p style="font-family:var(--font-mono);font-size:0.7rem;margin-bottom:12px;opacity:0.85;">Paste the exact error from your console and we'll tell you what it means.</p>
+    <div class="error-input-row">
+      <input type="text" id="err-input" class="error-input" placeholder="e.g. Uncaught ReferenceError: x is not defined" oninput="liveSearch(this.value)" onkeydown="if(event.key==='Enter')runSearch()">
+      <button class="search-btn" onclick="runSearch()">Translate →</button>
+    </div>
+    <div id="err-suggestions" class="suggestions"></div>
+    <div id="err-result" style="display:none;"></div>
+  </div>
+  <div class="err-filters">
+    <span class="err-filter-lbl">Filter:</span>
+    ${['all','html','css','js'].map(f=>`<button class="f-btn${f==='all'?' active':''}" onclick="filterErr('${f}',this)">${f.toUpperCase()}</button>`).join('')}
+  </div>
+  <div id="err-list"></div>
+  `;
+  renderErrList();
+}
+function renderErrList(){
+  const el=document.getElementById('err-list');
+  if(!el)return;
+  const list=errorsDB.filter(e=>currentErrFilter==='all'||e.tag===currentErrFilter);
+  el.innerHTML=list.map(e=>`
+    <div class="err-card" id="ec-${e.id}">
+      <div class="err-head" onclick="toggleErr('${e.id}')">
+        <div>
+          <span class="err-vibe">${e.vibe}</span>
+          <div class="err-title">${e.title}</div>
+          <div style="margin-top:5px;"><span class="err-tag-chip">${e.tag.toUpperCase()}</span></div>
+        </div>
+        <span class="err-toggle">+</span>
+      </div>
+      <div class="err-body"><div class="err-inner">
+        <span class="label-tag">What you're feeling</span>
+        <p style="font-size:0.88rem;line-height:1.7;margin-bottom:12px;">${e.feeling}</p>
+        <span class="label-tag">Why it actually happened</span>
+        <p style="font-size:0.88rem;line-height:1.7;margin-bottom:12px;">${e.why}</p>
+        <span class="label-tag">What you probably tried first (that didn't work)</span>
+        ${e.wrongAttempts.map(a=>`<div class="wrong-attempt">${a}</div>`).join('')}
+        <span class="label-tag" style="margin-top:14px;">The actual fix</span>
+        <div class="fix-box">${e.fix}</div>
+      </div></div>
+    </div>
+  `).join('');
+  if(!list.length)el.innerHTML='<p style="font-family:var(--font-mono);font-size:0.85rem;opacity:0.6;text-align:center;padding:30px;">No errors in this category yet.</p>';
+}
+function toggleErr(id){document.getElementById('ec-'+id).classList.toggle('open');}
+function filterErr(tag,el){
+  document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
+  if(el)el.classList.add('active');
+  currentErrFilter=tag;renderErrList();
+}
+function liveSearch(val){
+  const sug=document.getElementById('err-suggestions');
+  if(!sug)return;
+  const q=val.toLowerCase().trim();
+  if(q.length<3){sug.innerHTML='';return;}
+  const matches=errorsDB.filter(e=>e.keywords.some(k=>k.includes(q)||q.includes(k))).slice(0,4);
+  if(!matches.length){sug.innerHTML='';return;}
+  sug.innerHTML='<div style="font-family:var(--font-mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:6px;">Did you mean?</div>'+
+    matches.map(m=>`<span class="sug-chip" onclick="fillSearch('${m.id}')">${m.title}</span>`).join('');
+}
+function fillSearch(id){
+  const e=errorsDB.find(x=>x.id===id);if(!e)return;
+  const inp=document.getElementById('err-input');if(inp)inp.value=e.title;
+  document.getElementById('err-suggestions').innerHTML='';
+  showErrResult(e);
+}
+function runSearch(){
+  const inp=document.getElementById('err-input');if(!inp)return;
+  const q=inp.value.toLowerCase().trim();if(!q)return;
+  const match=errorsDB.find(e=>e.keywords.some(k=>q.includes(k)||k.includes((q.split(' ').find(w=>w.length>4)||''))));
+  if(match)showErrResult(match);
+  else{
+    const r=document.getElementById('err-result');
+    r.style.display='block';
+    r.innerHTML='<div class="search-result"><div class="result-vibe">Hmm, we don\'t have that one yet.</div><p style="font-size:0.88rem;line-height:1.6;">Try rephrasing — paste just the error type like TypeError or ReferenceError. Or browse by category below.</p></div>';
+  }
+}
+function showErrResult(e){
+  const r=document.getElementById('err-result');
+  r.style.display='block';
+  r.innerHTML=`<div class="search-result">
+    <div class="result-vibe">${e.vibe}</div>
+    <span class="label-tag">What you're probably feeling</span>
+    <p style="font-size:0.88rem;line-height:1.65;margin-bottom:10px;">${e.feeling}</p>
+    <span class="label-tag">Why it actually happened</span>
+    <p style="font-size:0.88rem;line-height:1.65;margin-bottom:10px;">${e.why}</p>
+    <span class="label-tag">What you probably tried (that didn't work)</span>
+    ${e.wrongAttempts.map(a=>`<div class="wrong-attempt">${a}</div>`).join('')}
+    <span class="label-tag" style="margin-top:14px;">The actual fix</span>
+    <div class="fix-box">${e.fix}</div>
+  </div>`;
+  r.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ── CONCEPTS ──
+function renderConcepts(area){
+  area.innerHTML=`
+  <h2 class="chapter-title">Concepts</h2>
+  <span class="chapter-badge">${conceptList.length} concepts · 4 characters · your pace</span>
+  <div class="concepts-wrap">
+    <div class="concept-sidebar">
+      <div class="concept-sidebar-lbl">Browse Topics</div>
+      <div id="c-list"></div>
+    </div>
+    <div>
+      <div class="char-bar">
+        <div class="char-bar-lbl">Who's explaining this?</div>
+        <div class="char-pills" id="char-pills"></div>
+      </div>
+      <div class="concept-card">
+        <span class="concept-speaker" id="c-speaker"></span>
+        <div class="concept-heading" id="c-title"></div>
+        <p class="concept-text" id="c-text"></p>
+      </div>
+      <div class="doubt-box">
+        <div class="doubt-label">STILL CONFUSED?</div>
+        <p style="font-family:var(--font-mono);font-size:0.68rem;margin-bottom:10px;opacity:0.85;">Ask a follow-up — answered in your character's voice.</p>
+        <div class="doubt-row">
+          <input type="text" id="doubt-input" class="doubt-input" placeholder="What part isn't clicking?" onkeydown="if(event.key==='Enter')askDoubt()">
+          <button class="doubt-btn" onclick="askDoubt()">Ask →</button>
+        </div>
+        <div id="doubt-answer" style="display:none;" class="doubt-answer"></div>
+      </div>
+      <div class="test-box">
+        <div class="test-lbl">TEST YOURSELF</div>
+        <p class="test-q" id="test-q"></p>
+        <button class="reveal-btn" onclick="revealAnswer()">Reveal Answer →</button>
+        <div id="test-reveal" class="test-reveal" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+  `;
+  buildConceptList();buildCharPills();renderConceptContent();
+}
+function buildConceptList(){
+  const el=document.getElementById('c-list');if(!el)return;
+  el.innerHTML=conceptList.map(c=>`
+    <div class="c-item${c.key===currentConcept?' active':''}" id="ci-${c.key}" onclick="selectConcept('${c.key}')">
+      <span class="c-name">${c.label}</span>
+      <span class="c-ctag">${c.tag}</span>
+      <span class="c-check">${checkedConcepts.includes(c.key)?'✓':''}</span>
+    </div>
+  `).join('');
+}
+function buildCharPills(){
+  const el=document.getElementById('char-pills');if(!el)return;
+  el.innerHTML=chars.map(c=>`
+    <div class="char-pill${c.key===currentChar?' active':''}" id="cp-${c.key}" onclick="selectChar('${c.key}')">${c.label}</div>
+  `).join('');
+}
+function selectConcept(key){
+  currentConcept=key;
+  document.querySelectorAll('.c-item').forEach(e=>e.classList.remove('active'));
+  const el=document.getElementById('ci-'+key);if(el)el.classList.add('active');
+  const da=document.getElementById('doubt-answer');
+  const tr=document.getElementById('test-reveal');
+  const di=document.getElementById('doubt-input');
+  if(da){da.style.display='none';da.innerHTML='';}
+  if(tr)tr.style.display='none';
+  if(di)di.value='';
+  renderConceptContent();
+}
+function selectChar(key){
+  currentChar=key;
+  document.querySelectorAll('.char-pill').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('cp-'+key);if(el)el.classList.add('active');
+  renderConceptContent();
+}
+function renderConceptContent(){
+  const ch=chars.find(c=>c.key===currentChar);
+  const concept=conceptList.find(c=>c.key===currentConcept);
+  const text=(conceptData[currentConcept]&&conceptData[currentConcept][currentChar])||'';
+  const sp=document.getElementById('c-speaker');
+  const ti=document.getElementById('c-title');
+  const tx=document.getElementById('c-text');
+  const tq=document.getElementById('test-q');
+  const tr=document.getElementById('test-reveal');
+  if(sp)sp.textContent=ch.full;
+  if(ti)ti.textContent=concept?concept.label:'';
+  if(tr)tr.style.display='none';
+  if(tx){tx.style.opacity=0;setTimeout(()=>{tx.textContent=text;tx.style.transition='opacity 0.25s';tx.style.opacity=1;},110);}
+  if(tq)tq.textContent=conceptQuestions[currentConcept]||'';
+}
+function revealAnswer(){
+  const el=document.getElementById('test-reveal');if(!el)return;
+  el.textContent=conceptAnswers[currentConcept]||'';
+  el.style.display='block';
+  if(!checkedConcepts.includes(currentConcept)){
+    checkedConcepts.push(currentConcept);
+    try{localStorage.setItem('lb_checked',JSON.stringify(checkedConcepts));}catch(e){}
+    const chk=document.querySelector('#ci-'+currentConcept+' .c-check');
+    if(chk)chk.textContent='✓';
+    updateProgress();
+    showToast('✓ Concept marked as learned!');
+  }
+}
+function askDoubt(){
+  const inp=document.getElementById('doubt-input');
+  const ans=document.getElementById('doubt-answer');
+  if(!inp||!ans)return;
+  if(!inp.value.trim())return;
+  const ch=chars.find(c=>c.key===currentChar);
+  const fallbacks={
+    phoebe:`Ooh that's such a good question! With ${conceptList.find(c=>c.key===currentConcept)?.label||'this'}, the thing to remember is it's not as complicated as it sounds. Try reading the main explanation again slowly — your brain is probably just getting tangled in the new words.`,
+    hermione:`That's a nuanced question. The core answer is: ${conceptAnswers[currentConcept]||''} I'd recommend cross-referencing MDN documentation for the precise technical specification.`,
+    rory:`Good question. Short answer: ${conceptAnswers[currentConcept]||''} For more depth, I'd recommend going straight to the official docs.`,
+    elle:`Okay so here's the thing — ${conceptAnswers[currentConcept]||''} And honestly once you get that, the rest just clicks into place. You're closer than you think!`
+  };
+  ans.style.display='block';
+  ans.innerHTML=`<strong style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:1px;color:#B8860B;display:block;margin-bottom:6px;">${ch.label} says:</strong>${fallbacks[currentChar]}`;
+}
+
+// ── SURVIVAL ──
+function renderSurvival(area){
+  area.innerHTML=`
+  <h2 class="chapter-title">Dev Survival Kit</h2>
+  <span class="chapter-badge">Open when things go wrong</span>
+  <p style="font-size:1rem;max-width:620px;margin-bottom:30px;line-height:1.75;">Not a blog post. An actual protocol for when you're stuck, frustrated, or convinced you're the only one who doesn't get it.</p>
+
+  <div class="survival-section">I am stuck right now</div>
+  <div class="stuck-flow">
+    <div class="stuck-q">What kind of stuck are you?</div>
+    <div class="stuck-opts">
+      <button class="stuck-btn" onclick="showProtocol('error',this)">There's an error in my console</button>
+      <button class="stuck-btn" onclick="showProtocol('nothing',this)">Nothing is broken but nothing works either</button>
+      <button class="stuck-btn" onclick="showProtocol('hour',this)">It has been over an hour on the same problem</button>
+      <button class="stuck-btn" onclick="showProtocol('understand',this)">I don't understand what I'm actually doing</button>
+    </div>
+    <div id="stuck-proto" class="stuck-protocol"></div>
+  </div>
+
+  <div class="survival-section" style="margin-top:34px;">How long is this supposed to take?</div>
+  <p style="font-size:0.88rem;max-width:600px;margin-bottom:14px;line-height:1.75;opacity:0.85;">You are not slow. These are real averages from real beginners.</p>
+  <div class="time-grid">
+    ${[
+      {task:'First HTML page',range:'2 — 4 hrs',note:'Mostly spent figuring out what a tag actually is and why the browser won\'t show your text.'},
+      {task:'First flexbox layout',range:'3 — 6 hrs',note:'justify-content vs align-items breaks everyone the first time. Usually multiple times.'},
+      {task:'First working JavaScript',range:'4 — 8 hrs',note:'Mostly spent wondering why "undefined" keeps appearing and why the button does nothing.'},
+      {task:'First API call that works',range:'1 — 2 days',note:'Async, CORS errors, and JSON parsing tend to all arrive at the same time.'},
+      {task:'First deployed site',range:'1 — 3 days',note:'Git, GitHub, and deployment all feel broken in sequence until suddenly they don\'t.'},
+      {task:'Feeling comfortable in JS',range:'3 — 6 months',note:'Not mastery. Comfortable. There is a meaningful difference and either is fine.'},
+    ].map(c=>`<div class="time-card"><div class="time-task">${c.task}</div><div class="time-range">${c.range}</div><div class="time-note">${c.note}</div></div>`).join('')}
+  </div>
+
+  <div class="survival-section" style="margin-top:34px;">On imposter syndrome</div>
+  <div class="imposter-card">
+    <p class="imposter-voice">"Everyone else just gets it and I'm the only one pretending."</p>
+    <span class="label-tag">What is actually true</span>
+    <p class="imposter-truth">Every developer you admire has a folder on their computer called <code style="font-family:var(--font-mono);font-size:0.82rem;background:var(--pink-pale);padding:1px 6px;border:1px solid var(--pink-light);">old-stuff</code> or <code style="font-family:var(--font-mono);font-size:0.82rem;background:var(--pink-pale);padding:1px 6px;border:1px solid var(--pink-light);">dont-look-at-this</code> full of code they're embarrassed by. The difference between a senior developer and a beginner is not raw intelligence — it's exposure to more broken things.</p>
+    <div class="imposter-reframe">The feeling that everyone else understands is a cognitive distortion: you see other people's finished, working projects. You do not see the three hours they spent stuck before it worked. The gap you feel is not between you and them — it's between your process and their output.</div>
+    <span class="label-tag">One thing to do right now</span>
+    <p class="imposter-truth">Write down one thing you built or understood today that you couldn't have done a week ago. The accumulation of small things is how this works — and you cannot see the accumulation when you're inside it.</p>
+    <div class="evidence-prompt">Today I understood / built / figured out: ___________________________</div>
+  </div>
+
+  <div class="survival-section" style="margin-top:34px;">Burnout check</div>
+  <div class="burnout-check">
+    <div class="burnout-q">How is this learning session going?</div>
+    <div class="burnout-opts" id="bo-opts">
+      <button class="burnout-opt" onclick="burnout('good')">Going well — I'm in it and absorbing things</button>
+      <button class="burnout-opt" onclick="burnout('frustrated')">Frustrated, but still here and still trying</button>
+      <button class="burnout-opt" onclick="burnout('exhausted')">Exhausted — reading words but nothing is landing</button>
+      <button class="burnout-opt" onclick="burnout('quitting')">Wondering if this is even something I can do</button>
+    </div>
+    <div id="bo-response" class="burnout-response" style="display:none;"></div>
+    <button id="bo-reset" class="burnout-reset" onclick="resetBurnout()" style="display:none;">Check in again</button>
+  </div>
+  `;
+  // Show first protocol by default
+  showProtocol('error', document.querySelector('.stuck-btn'));
+}
+function showProtocol(type,btn){
+  document.querySelectorAll('.stuck-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const el=document.getElementById('stuck-proto');if(!el)return;
+  const d=stuckProtocols[type];if(!d)return;
+  el.innerHTML=`<div class="proto-header">${d.header}</div>`+
+    d.steps.map((s,i)=>`
+      <div class="proto-step">
+        <div class="proto-num">${i+1}</div>
+        <div class="proto-body"><strong>${s.title}</strong><br><br>${s.body}</div>
+      </div>
+    `).join('');
+  el.classList.add('show');
+}
+function burnout(type){
+  const opts=document.getElementById('bo-opts');
+  const resp=document.getElementById('bo-response');
+  const reset=document.getElementById('bo-reset');
+  if(!opts||!resp)return;
+  const d=burnoutData[type];if(!d)return;
+  opts.style.display='none';
+  resp.style.display='block';
+  resp.innerHTML=`
+    <span class="label-tag">${d.label}</span>
+    <p style="font-size:0.9rem;line-height:1.85;margin-bottom:14px;">${d.text}</p>
+    <div class="burnout-action-box">
+      <span class="label-tag">What to do now</span>
+      <p style="font-size:0.88rem;line-height:1.7;">${d.action}</p>
+    </div>
+  `;
+  if(reset)reset.style.display='block';
+}
+function resetBurnout(){
+  const opts=document.getElementById('bo-opts');
+  const resp=document.getElementById('bo-response');
+  const reset=document.getElementById('bo-reset');
+  if(opts)opts.style.display='flex';
+  if(resp){resp.style.display='none';resp.innerHTML='';}
+  if(reset)reset.style.display='none';
+}
+
+// ======= INIT =======
+updateProgress();
+</script>
+</body>
+</html>
