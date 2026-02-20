@@ -16,7 +16,7 @@
 
 ### Hosted Project Link
 
-[mention your project hosted link here]
+https://legallybright.tiiny.site
 
 ---
 
