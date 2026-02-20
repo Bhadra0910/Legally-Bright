@@ -111,17 +111,18 @@ python -m http.server 3000
 
 #### Screenshots
 
-![Screenshot1](Add screenshot 1 here with proper name)
-*Cover page — the magazine-style entry point with scrapbook aesthetic and animated open button*
+![Cover page — the magazine-style entry point with scrapbook aesthetic and animated open button]
+C:\Users\MALAVIKA RAJAN\OneDrive\Pictures\Screenshots\Screenshot (570)
+C:\Users\MALAVIKA RAJAN\OneDrive\Pictures\Screenshots\Screenshot (571)
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Concepts tab — multi-voice explanation panel with character selector, test-yourself section, and doubt box*
+![Concepts tab — multi-voice explanation panel with character selector, test-yourself section, and doubt box]
+C:\Users\MALAVIKA RAJAN\OneDrive\Pictures\Screenshots\Screenshot (572)
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Mistakes tab — error translator with live search, emotional framing, and step-by-step fix guides*
+![Mistakes tab — error translator with live search, emotional framing, and step-by-step fix guides]
+C:\Users\MALAVIKA RAJAN\OneDrive\Pictures\Screenshots\Screenshot (573)
 
-![Screenshot4](Add screenshot 4 here with proper name)
-*Survival Kit — interactive stuck-type selector with protocol steps and burnout check-in widget*
+![Survival Kit — interactive stuck-type selector with protocol steps and burnout check-in widget]
+C:\Users\MALAVIKA RAJAN\OneDrive\Pictures\Screenshots\Screenshot (574)
 
 ---
 
